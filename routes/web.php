@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+Route::group(['middleware' => ['auth','verified']], function () {
+
+
+});
+
+Route::get('/', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'store']);
+
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::delete('/book/{book}', function (Book $book) {
+    //
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
