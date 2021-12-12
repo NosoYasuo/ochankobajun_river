@@ -122,4 +122,10 @@ class PostController extends Controller
     {
         //
     }
+
+    public function myRiver($river_id)
+    {
+        $posts = Post::where('river_id', $river_id)->get();
+        return view('myriver', ['posts' => $posts]);
+    }
 }

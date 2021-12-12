@@ -12,6 +12,9 @@
           投稿してみる
         </button>
 
+
+        <a href="{{ url('myriver/'.Auth::user()->river_id) }}">自分の登録した川へ</a>
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -45,8 +48,6 @@
             </div>
           </div>
         </div>
-
-
     </div>
     <!-- Book: 既に登録されてる本のリスト -->
 
@@ -68,12 +69,6 @@
                                     <div>{{ $post->message}}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $post->latitude}}</div>
-                                </td>
-                                <td class="table-text">
-                                    <div>{{ $post->longitude}}</div>
-                                </td>
-                                <td class="table-text">
                                     <div>{{ $post->user_name}}</div>
                                 </td>
                                 <td class="table-text">
@@ -83,9 +78,8 @@
                                     <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width :200px; height: 100px;">
                                 </td>
                                 <td class="table-text">
-                                     <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="width :300px; height: 150px;"></video>
+                                    <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :300px; height: 150px;"></video>
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>

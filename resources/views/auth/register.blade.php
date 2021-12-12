@@ -40,6 +40,18 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="river_id" class="col-md-4 col-form-label text-md-right">{{ __('river_name') }}</label>
+                            <div class="col-md-6">
+                                <select name="river_id">
+                                @foreach(config('river') as $index => $name)
+                                    <option name="river_id" value="{{ $index }}">{{ $name }}</option>
+                                    {{-- <option value="{{ $index }}" {{ old('river_id') === $river_id ? "selected" : ""}}>{{ $name }}</option> --}}
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">

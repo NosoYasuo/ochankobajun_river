@@ -21,17 +21,17 @@ use App\Http\Controllers\HomeController;
 
 Route::group(['middleware' => ['auth','verified']], function () {
 
-
-});
-
-Route::get('/', [PostController::class, 'index']);
-Route::post('/posts', [PostController::class, 'store']);
+    Route::get('/', [PostController::class, 'index']);
+    Route::get('/myriver/{river_id}', [PostController::class, 'myRiver']);
+    Route::post('/posts', [PostController::class, 'store']);
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::delete('/book/{book}', function (Book $book) {
-    //
+    // Route::delete('/book/{book}', function (Book $book) {
+    //     //
+    // });
+
 });
 
 Auth::routes();
