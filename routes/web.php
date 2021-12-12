@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::get('/', [PostController::class, 'index']);
     Route::get('/myriver/{river_id}', [PostController::class, 'myRiver']);
+    Route::get('/mypage', [PostController::class, 'myPage']);
     Route::post('/posts', [PostController::class, 'store']);
 
 

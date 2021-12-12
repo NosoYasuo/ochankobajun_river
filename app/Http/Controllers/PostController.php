@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class PostController extends Controller
 {
@@ -63,7 +64,7 @@ class PostController extends Controller
             //画像が登録されなかった時はから文字をいれる
             $fileName = "";
         }
-
+        $user = Auth::user();
         $posts = new Post;
         $posts->message = $request->message;
         $posts->file_name = $fileName;
@@ -71,8 +72,8 @@ class PostController extends Controller
         $posts->address = $request->address;
         $posts->latitude = '59.12899900';
         $posts->longitude = '101.26384400';
-        $posts->user_id = 1;
-        $posts->user_name = '小林純';
+        $posts->user_id = $user->id;
+        $posts->user_name = $user->name;
         $posts->save();
         return redirect('/');
 
@@ -127,5 +128,12 @@ class PostController extends Controller
     {
         $posts = Post::where('river_id', $river_id)->get();
         return view('myriver', ['posts' => $posts]);
+    }
+
+    public function myPage()
+    {
+
+        $posts = Post::where('user_id', Auth::id())->get();
+        return view('mypage', ['posts' => $posts]);
     }
 }

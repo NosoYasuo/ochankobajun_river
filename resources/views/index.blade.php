@@ -14,6 +14,7 @@
 
 
         <a href="{{ url('myriver/'.Auth::user()->river_id) }}">自分の登録した川へ</a>
+        <a href="{{ url('mypage')}}">マイページ</a>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

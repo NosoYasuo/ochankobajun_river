@@ -1,14 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
-
 @if (count($posts) > 0)
 <div class="card-body">
     <div class="card-body">
         <table class="table table-striped task-table">
             <!-- テーブルヘッダ -->
             <thead>
-                <th>___川投稿一覧</th>
+                <th>自分の投稿一覧</th>
                 <th>&nbsp;</th>
             </thead>
             <!-- テーブル本体 -->
@@ -37,6 +36,9 @@
         </table>
     </div>
 </div>
+@else
+まだ投稿がありません
 @endif
+
 
 @endsection
