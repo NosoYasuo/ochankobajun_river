@@ -26,10 +26,18 @@
                             <div>{{ $post->riverName}}</div>
                         </td>
                         <td class="table-text">
-                            <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width :200px; height: 100px;">
-                        </td>
-                        <td class="table-text">
-                            <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :300px; height: 150px;"></video>
+                        @switch($post->file_ext)
+                            @case(1)
+                                <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width :200px; height: 100px;">
+                                @break
+                            @case(2)
+                                <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :373px; height: 210px;"></video>
+                                @break
+                            @case(3)
+                                <iframe width="373" height="210" src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                @break
+                            @default
+                        @endswitch
                         </td>
                     </tr>
                 @endforeach

@@ -38,8 +38,10 @@
                 @foreach (config('river') as $index => $name)
                 <input type="radio" name="river_id" value="{{$index}}">{{$name}}
                 @endforeach
+                <input type="text" id="myImage" name="y_id" class="form-control" placeholder="youtube ID">
                 <input type="file" id="myImage" name="file_name" class="form-control">
-               <div style='width:300px; height:300px;'><img id="preview" style="width:100%; height:100%;"></div>
+                {{-- 画像を表示 --}}
+                <div style='width:300px; height:300px;'><img id="preview" style="width:100%; height:100%;"></div>
               </div>
               <!-- 本 登録ボタン -->
               <div class="modal-footer">
@@ -49,8 +51,11 @@
             </div>
           </div>
         </div>
+        <!-- Modal end-->
+
     </div>
-    <!-- Book: 既に登録されてる本のリスト -->
+
+    {{-- 一覧表示 --}}
 
         @if (count($posts) > 0)
         <div class="card-body">
@@ -76,10 +81,18 @@
                                     <div>{{ $post->riverName}}</div>
                                 </td>
                                 <td class="table-text">
-                                    <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width :200px; height: 100px;">
-                                </td>
-                                <td class="table-text">
-                                    <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :300px; height: 150px;"></video>
+                                @switch($post->file_ext)
+                                    @case(1)
+                                        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width :200px; height: 100px;">
+                                        @break
+                                    @case(2)
+                                        <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :373px; height: 210px;"></video>
+                                        @break
+                                    @case(3)
+                                        <iframe width="373" height="210" src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        @break
+                                    @default
+                                @endswitch
                                 </td>
                             </tr>
                         @endforeach

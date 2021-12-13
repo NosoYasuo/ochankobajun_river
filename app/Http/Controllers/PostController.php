@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'asc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->take(10)->get();
 
         return view('index', ['posts' => $posts]);
     }
@@ -40,43 +40,65 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //バリデーション
-        $validator = Validator::make($request->all(), [
-            'message' => 'required|max:140',
-            'river_id' => 'required',
-        ]);
+            $validator = Validator::make($request->all(), [
+                'message' => 'required|max:140',
+                'river_id' => 'required',
+            ]);
 
         //バリデーション:エラー
-        if ($validator->fails()) {
-            return redirect('/')
-                ->withInput()
-                ->withErrors($validator);
-        }
+            if ($validator->fails()) {
+                return redirect('/')
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+
+        // //youtube_id の扱い
+        //     /// Youtube動画のURL
+        //     $video_url = 'https://www.youtube.com/watch?v=' . $request->y_id;
+        //     /// oEmebdからメタ情報取得して表示
+        //     $oembed_url = "https://www.youtube.com/oembed?url={$video_url}&format=json";
+        //     $ch = curl_init($oembed_url);
+        //     curl_setopt_array($ch, [
+        //         CURLOPT_RETURNTRANSFER => 1
+        //     ]);
+        //     $resp = curl_exec($ch);
+        //     $metas = json_decode($resp, true);
+
 
         //画像の扱いに関して
         if ($file = $request->file_name) {
-            // //保存するファイルに名前をつける
-            // $fileName = time() . '.' . $file->getClientOriginalExtension();
-            // //Laravel直下のpublicディレクトリに新フォルダをつくり保存する
-            // $target_path = public_path('/uploads/');
-            // $file->move($target_path, $fileName);
-            $fileName = $request->file('file_name')->store('uploads',"public");
+            $fileName = $request->file('file_name')->store('uploads', "public");
+            $file = $file->getClientOriginalName();
         } else {
             //画像が登録されなかった時はから文字をいれる
             $fileName = "";
         }
+
+        //file extension を定義
+        if (preg_match('/\.(jpg|jpeg|png|heic)$/i', $file)) {
+            $file_ext = 1;
+        } elseif (preg_match('/\.(avi|mp4|mov|wmv)$/i', $file)) {
+            $file_ext = 2;
+        } elseif ($request->y_id) {
+            $file_ext = 3;
+        }
+
         $user = Auth::user();
         $posts = new Post;
         $posts->message = $request->message;
         $posts->file_name = $fileName;
+        $posts->y_id = $request->y_id;
+        if ($posts->file_ext) {
+            $posts->file_ext = $file_ext;
+        }
         $posts->river_id = $request->river_id;
         $posts->address = $request->address;
-        $posts->latitude = '59.12899900';
-        $posts->longitude = '101.26384400';
+        $posts->latitude = $request->latitude;
+        $posts->longitude = $request->longitude;
         $posts->user_id = $user->id;
         $posts->user_name = $user->name;
         $posts->save();
         return redirect('/');
-
     }
 
     /**
@@ -124,12 +146,14 @@ class PostController extends Controller
         //
     }
 
+    //myriverへ移動
     public function myRiver($river_id)
     {
         $posts = Post::where('river_id', $river_id)->get();
         return view('myriver', ['posts' => $posts]);
     }
 
+    //mypageへ移動
     public function myPage()
     {
 
