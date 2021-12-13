@@ -81,5 +81,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/like.js') }}"></script>
 </body>
 </html>

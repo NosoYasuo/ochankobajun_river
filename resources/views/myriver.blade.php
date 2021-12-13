@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('content')
 
+<style>
+    .liked {
+        color: pink;
+    }
+</style>
+
 
 @if (count($posts) > 0)
 <div class="card-body">
@@ -38,6 +44,20 @@
                                 @break
                             @default
                         @endswitch
+                        </td>
+                        <td>
+                        <!--いいね-->
+                            @if (!$post->isLikedBy(Auth::user()))
+                            <span class="likes">
+                                <i class="fas fa-heart like-toggle" data-review-id="{{ $post->id }}"></i>
+                                <span class="like-counter">{{$post->likes_count}}</span>
+                            </span><!-- /.likes -->
+                            @else
+                            <span class="likes">
+                                <i class="fas fa-heart like-toggle liked" data-review-id="{{ $post->id }}"></i>
+                                <span class="like-counter">{{$post->likes_count}}</span>
+                                </span><!-- /.likes -->
+                            @endif
                         </td>
                     </tr>
                 @endforeach

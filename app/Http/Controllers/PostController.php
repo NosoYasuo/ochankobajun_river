@@ -149,7 +149,7 @@ class PostController extends Controller
     //myriverへ移動
     public function myRiver($river_id)
     {
-        $posts = Post::where('river_id', $river_id)->get();
+        $posts = Post::withCount('likes')->where('river_id', $river_id)->get();
         return view('myriver', ['posts' => $posts, 'river_id' => $river_id]);
     }
 

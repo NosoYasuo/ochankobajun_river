@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/comment', [PostController::class, 'comment']);
     Route::post('/like', [LikeController::class, 'like']);
+    Route::post('myriver/like', [LikeController::class, 'like']);
 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');

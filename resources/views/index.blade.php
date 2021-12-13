@@ -129,7 +129,6 @@
                                         </span><!-- /.likes -->
                                     @endif
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>
@@ -137,6 +136,5 @@
             </div>
         </div>
 <script src="{{ asset('js/index.js') }}"></script>
-<script src="{{ asset('js/like.js') }}"></script>
     @endif
 @endsection
