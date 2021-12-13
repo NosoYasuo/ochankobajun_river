@@ -19,12 +19,15 @@ use App\Http\Controllers\HomeController;
 //     return view('index');
 // });
 
+Route::get('/', [PostController::class, 'index']);
+
 Route::group(['middleware' => ['auth','verified']], function () {
 
-    Route::get('/', [PostController::class, 'index']);
+
     Route::get('/myriver/{river_id}', [PostController::class, 'myRiver']);
     Route::get('/mypage', [PostController::class, 'myPage']);
     Route::post('/posts', [PostController::class, 'store']);
+    Route::post('/comment', [PostController::class, 'comment']);
 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');

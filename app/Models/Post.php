@@ -13,4 +13,9 @@ class Post extends Model
     {
         return config('river.' . $this->river_id);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

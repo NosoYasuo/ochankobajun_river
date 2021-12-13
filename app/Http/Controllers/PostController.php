@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -16,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->take(10)->get();
+        $posts = Post::orderBy('id', 'desc')->take(10)->get();
 
         return view('index', ['posts' => $posts]);
     }
@@ -159,5 +160,29 @@ class PostController extends Controller
 
         $posts = Post::where('user_id', Auth::id())->get();
         return view('mypage', ['posts' => $posts]);
+    }
+
+    //コメント記入
+    public function comment(Request $request)
+    {
+        //バリデーション
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required|max:140',
+        ]);
+
+        //バリデーション:エラー
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withInput()
+                ->withErrors($validator);
+        }
+        $user = Auth::user();
+        $comments = new Comment;
+        $comments->comment = $request->comment;
+        $comments->user_id = $user->id;
+        $comments->user_name = $user->name;
+        $comments->post_id = $request->post_id;
+        $comments->save();
+        return redirect('/');
     }
 }
