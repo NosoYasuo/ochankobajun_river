@@ -8,7 +8,7 @@
         <table class="table table-striped task-table">
             <!-- テーブルヘッダ -->
             <thead>
-                <th>___川投稿一覧</th>
+                <th>{{config('river')[$river_id]}}投稿一覧</th>
                 <th>&nbsp;</th>
             </thead>
             <!-- テーブル本体 -->

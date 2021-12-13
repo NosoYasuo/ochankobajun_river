@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/mypage', [PostController::class, 'myPage']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/comment', [PostController::class, 'comment']);
+    Route::post('/like', [LikeController::class, 'like']);
 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');

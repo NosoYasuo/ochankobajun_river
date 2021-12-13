@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->take(10)->get();
+        $posts = Post::withCount('likes')->orderBy('id', 'desc')->take(10)->get();
 
         return view('index', ['posts' => $posts]);
     }
@@ -69,16 +69,15 @@ class PostController extends Controller
         //画像の扱いに関して
         if ($file = $request->file_name) {
             $fileName = $request->file('file_name')->store('uploads', "public");
-            $file = $file->getClientOriginalName();
         } else {
             //画像が登録されなかった時はから文字をいれる
             $fileName = "";
         }
 
         //file extension を定義
-        if (preg_match('/\.(jpg|jpeg|png|heic)$/i', $file)) {
+        if (preg_match('/\.(jpg|jpeg|png|heic)$/i', $fileName)) {
             $file_ext = 1;
-        } elseif (preg_match('/\.(avi|mp4|mov|wmv)$/i', $file)) {
+        } elseif (preg_match('/\.(avi|mp4|mov|wmv)$/i', $fileName)) {
             $file_ext = 2;
         } elseif ($request->y_id) {
             $file_ext = 3;
@@ -89,7 +88,7 @@ class PostController extends Controller
         $posts->message = $request->message;
         $posts->file_name = $fileName;
         $posts->y_id = $request->y_id;
-        if ($posts->file_ext) {
+        if ($file_ext) {
             $posts->file_ext = $file_ext;
         }
         $posts->river_id = $request->river_id;
@@ -151,7 +150,7 @@ class PostController extends Controller
     public function myRiver($river_id)
     {
         $posts = Post::where('river_id', $river_id)->get();
-        return view('myriver', ['posts' => $posts]);
+        return view('myriver', ['posts' => $posts, 'river_id' => $river_id]);
     }
 
     //mypageへ移動

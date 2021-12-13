@@ -1,11 +1,17 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .liked {
+            color: pink;
+        }
+    </style>
     <!-- Bootstrapの定形コード… -->
     <div class="card-body">
 
         <!-- バリデーションエラーの表示に使用-->
         @include('common.errors')
         <!-- バリデーションエラーの表示に使用-->
+
 
 
 
@@ -109,6 +115,21 @@
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </form>
                                 </td>
+                                <td>
+                                <!--いいね-->
+                                    @if (!$post->isLikedBy(Auth::user()))
+                                    <span class="likes">
+                                        <i class="fas fa-heart like-toggle" data-review-id="{{ $post->id }}"></i>
+                                        <span class="like-counter">{{$post->likes_count}}</span>
+                                    </span><!-- /.likes -->
+                                    @else
+                                    <span class="likes">
+                                        <i class="fas fa-heart like-toggle liked" data-review-id="{{ $post->id }}"></i>
+                                        <span class="like-counter">{{$post->likes_count}}</span>
+                                        </span><!-- /.likes -->
+                                    @endif
+                                </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -116,5 +137,6 @@
             </div>
         </div>
 <script src="{{ asset('js/index.js') }}"></script>
+<script src="{{ asset('js/like.js') }}"></script>
     @endif
 @endsection
