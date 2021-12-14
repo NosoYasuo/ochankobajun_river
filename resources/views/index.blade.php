@@ -109,6 +109,7 @@
                                 <td class="table-text">
 
                                     @if ($post->comments)
+                                    <div>コメント数:{{$post->comments_count}}</div>
                                         @foreach ($post->comments as $comment)
                                         <div>{{$comment->comment}}</div><br>
                                         @endforeach

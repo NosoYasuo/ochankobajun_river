@@ -20,11 +20,10 @@ class PostController extends Controller
     {
         $url = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
         $crawler = Goutte::request('GET', $url);
-
         $title =  $crawler->filter('td.bColorThinBlue')->text();
         $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
 
-        $posts = Post::withCount('likes')->orderBy('id', 'desc')->take(10)->get();
+        $posts = Post::withCount('likes')->withCount('comments')->orderBy('id', 'desc')->take(10)->get();
 
         return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
     }
