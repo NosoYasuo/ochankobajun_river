@@ -42,10 +42,13 @@
                         <input type="text" name="message" class="form-control" placeholder="本文">
                     </div>
                 </div>
-                {{-- ラジオボタンで川を選択 --}}
-                @foreach (config('river') as $index => $name)
-                <input type="radio" name="river_id" value="{{$index}}">{{$name}}
+                {{-- プルダウンで川を選択 --}}
+                <select name="river_id">
+                @foreach(config('river') as $index => $name)
+                    <option name="river_id" value="{{ $index }}">{{ $name }}</option>
+                    {{-- <option value="{{ $index }}" {{ old('river_id') === $river_id ? "selected" : ""}}>{{ $name }}</option> --}}
                 @endforeach
+                </select>
                 <input type="text" id="myImage" name="y_id" class="form-control" placeholder="youtube ID">
                 <input type="file" id="myImage" name="file_name" class="form-control">
                 {{-- 画像を表示 --}}
