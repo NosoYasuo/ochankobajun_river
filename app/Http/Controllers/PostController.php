@@ -157,7 +157,7 @@ class PostController extends Controller
     public function myPage()
     {
 
-        $posts = Post::where('user_id', Auth::id())->get();
+        $posts = Post::withCount('likes')->where('user_id', Auth::id())->get();
         return view('mypage', ['posts' => $posts]);
     }
 

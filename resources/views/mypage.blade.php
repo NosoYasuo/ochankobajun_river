@@ -38,6 +38,12 @@
                             @default
                         @endswitch
                         </td>
+                        <td>
+                        <span class="likes">
+                            <i class="fas fa-heart heart"></i>
+                            <span class="like-counter">{{$post->likes_count}}</span>
+                        </span>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -39,7 +39,7 @@
                 <!-- 本のタイトル -->
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <input type="text" name="message" class="form-control">
+                        <input type="text" name="message" class="form-control" placeholder="本文">
                     </div>
                 </div>
                 {{-- ラジオボタンで川を選択 --}}
@@ -117,17 +117,25 @@
                                 </td>
                                 <td>
                                 <!--いいね-->
+                                @auth
                                     @if (!$post->isLikedBy(Auth::user()))
                                     <span class="likes">
                                         <i class="fas fa-heart like-toggle" data-review-id="{{ $post->id }}"></i>
                                         <span class="like-counter">{{$post->likes_count}}</span>
-                                    </span><!-- /.likes -->
+                                    </span>
                                     @else
                                     <span class="likes">
                                         <i class="fas fa-heart like-toggle liked" data-review-id="{{ $post->id }}"></i>
                                         <span class="like-counter">{{$post->likes_count}}</span>
-                                        </span><!-- /.likes -->
+                                        </span>
                                     @endif
+                                @endauth
+                                @guest
+                                    <span class="likes">
+                                        <i class="fas fa-heart heart"></i>
+                                        <span class="like-counter">{{$post->likes_count}}</span>
+                                    </span>
+                                @endguest
                                 </td>
                             </tr>
                         @endforeach
