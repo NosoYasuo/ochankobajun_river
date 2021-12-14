@@ -13,12 +13,13 @@
         <!-- バリデーションエラーの表示に使用-->
 
 
-
+        <div>{{$title}}</div>
+        <div>{{$info}}</div>
 
         @auth
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          投稿してみる
+        投稿してみる
         </button>
         <a href="{{ url('myriver/'.Auth::user()->river_id) }}">自分の登録した川へ</a>
         <a href="{{ url('mypage')}}">マイページ</a>
@@ -44,7 +45,7 @@
                 </div>
                 {{-- プルダウンで川を選択 --}}
                 <select name="river_id">
-                @foreach(config('river') as $index => $name)
+                @foreach(config('river.river') as $index => $name)
                     <option name="river_id" value="{{ $index }}">{{ $name }}</option>
                     {{-- <option value="{{ $index }}" {{ old('river_id') === $river_id ? "selected" : ""}}>{{ $name }}</option> --}}
                 @endforeach
@@ -106,16 +107,18 @@
                                 @endswitch
                                 </td>
                                 <td class="table-text">
+
                                     @if ($post->comments)
                                         @foreach ($post->comments as $comment)
                                         <div>{{$comment->comment}}</div><br>
                                         @endforeach
                                     @endif
+                                    {{-- <div id=comments></div> --}}
                                     <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
                                         {{ csrf_field() }}
-                                        <input type="text" name=comment placeholder="コメント記入欄">
-                                        <input type="hidden" name=post_id value="{{$post->id}}">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <input id=comment type="text" name=comment placeholder="コメント記入欄">
+                                        <input type="hidden" id=post_id name=post_id value="{{$post->id}}">
+                                        <button id=submit type="submit" class="btn btn-primary">Save</button>
                                     </form>
                                 </td>
                                 <td>

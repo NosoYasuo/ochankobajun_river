@@ -3,7 +3,7 @@
 
 <div>登録名:{{Auth::user()->name}}</div>
 <div>
-    登録川:{{config('river')[Auth::user()->river_id]}}
+    登録川:{{config('river.river')[Auth::user()->river_id]}}
 </div>
 
 @if (count($posts) > 0)

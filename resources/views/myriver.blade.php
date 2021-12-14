@@ -7,14 +7,14 @@
     }
 </style>
 
-
+<iframe width="600" height="350" src="https://www.youtube.com/embed/{{config('river.river_id')[$river_id]}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{config('river.river_id')[$river_id]}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 @if (count($posts) > 0)
 <div class="card-body">
     <div class="card-body">
         <table class="table table-striped task-table">
             <!-- テーブルヘッダ -->
             <thead>
-                <th>{{config('river')[$river_id]}}投稿一覧</th>
+                <th>{{config('river.river')[$river_id]}}投稿一覧</th>
                 <th>&nbsp;</th>
             </thead>
             <!-- テーブル本体 -->

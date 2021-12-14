@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Goutte;
 
 class PostController extends Controller
 {
@@ -17,9 +18,15 @@ class PostController extends Controller
      */
     public function index()
     {
+        $url = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
+        $crawler = Goutte::request('GET', $url);
+
+        $title =  $crawler->filter('td.bColorThinBlue')->text();
+        $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
+
         $posts = Post::withCount('likes')->orderBy('id', 'desc')->take(10)->get();
 
-        return view('index', ['posts' => $posts]);
+        return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
     }
 
     /**
@@ -183,5 +190,22 @@ class PostController extends Controller
         $comments->post_id = $request->post_id;
         $comments->save();
         return redirect('/');
+
+        // $comments = Comment::where('post_id',$request->post_id)->get();
+        // $param = [
+        //          'comments' => $comments,
+        //          ];
+        //     return response()->json($param); //6.JSONデータをjQueryに返す
     }
+
+    public function scrape(){
+        $url = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
+        $crawler = Goutte::request('GET', $url);
+
+        $title =  $crawler->filter('td.bColorThinBlue')->text();
+        $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
+
+        return view('info', ['title' => $title, 'info' => $info]);
+    }
+
 }
