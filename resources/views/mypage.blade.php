@@ -28,7 +28,7 @@
                         <div>{{ $post->user_name}}</div>
                     </td>
                     <td class="table-text">
-                        <div>{{ $post->riverName}}</div>
+                        <div>{{config('river.river')[$post->river_id]}}</div>
                     </td>
                     <td class="table-text">
                     @switch($post->file_ext)
@@ -58,6 +58,4 @@
 @else
 まだ投稿がありません
 @endif
-
-
 @endsection

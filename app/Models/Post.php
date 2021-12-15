@@ -11,7 +11,7 @@ class Post extends Model
 
     public function getRiverNameAttribute()
     {
-        return config('river.' . $this->river_id);
+        return config('river.river')[$this->river_id];
     }
 
     public function comments()

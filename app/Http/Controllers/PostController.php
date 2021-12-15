@@ -48,6 +48,7 @@ class PostController extends Controller
     {
         //バリデーション
             $validator = Validator::make($request->all(), [
+                'title' => 'required|max:50',
                 'message' => 'required|max:140',
                 'river_id' => 'required',
             ]);
@@ -91,6 +92,7 @@ class PostController extends Controller
 
         $user = Auth::user();
         $posts = new Post;
+        $posts->title = $request->title;
         $posts->message = $request->message;
         $posts->file_name = $fileName;
         $posts->y_id = $request->y_id;
@@ -155,7 +157,7 @@ class PostController extends Controller
     //myriverへ移動
     public function myRiver($river_id)
     {
-        $posts = Post::withCount('likes')->where('river_id', $river_id)->get();
+        $posts = Post::withCount('likes')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
         return view('myriver', ['posts' => $posts, 'river_id' => $river_id]);
     }
 
@@ -163,7 +165,7 @@ class PostController extends Controller
     public function myPage()
     {
 
-        $posts = Post::withCount('likes')->where('user_id', Auth::id())->get();
+        $posts = Post::withCount('likes')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return view('mypage', ['posts' => $posts]);
     }
 
