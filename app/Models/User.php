@@ -42,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getRiverNameAttribute()
+    {
+        return config('river.river')[$this->river_id];
+    }
 }

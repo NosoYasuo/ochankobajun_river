@@ -8,32 +8,32 @@
     <div>
       <p class="m-0 pt-4">マイリバー</p>
       <button type="button" class="btn text-dark w-100 mb-4" style="background-color: #81D8D0; font-size: 24px;">
-        {{config('river.river')[Auth::user()->river_id]}}
+        {{ Auth::user()->riverName}}
       </button>
     </div>
 
-    @if (count($posts) > 0)
+
 
     <!-- テーブルヘッダ -->
     <!-- <p class="m-0 pt-4">自分の投稿一覧</p> -->
   </div>
-
+  @if (count($posts) > 0)
   <table class="table table-borderless d-flex align-items-center w-100">
     <!-- テーブル本体 -->
     <tbody class="card-body w-100" style="display:flex; flex-direction: column-reverse; padding: 0;">
       @foreach ($posts as $post)
       <tr class="card border border-0 mx-auto w-100 px-1">
         <!-- <tr style=" display:flex; flex-direction: column;"> -->
-        <!-- 本タイトル -->
+        <!-- タイトル -->
         <td class="table-text mt-4">
-          <div class="title">{{ $post->message}}</div>
+          <div class="title">{{ $post->title}}</div>
         </td>
         <td class="table-text d-flex justify-content-between">
           <div class="text-secondary small">
             @ {{ $post->user_name}}
           </div>
           <span class="badge rounded-pill text-dark" style="background-color: #81D8D0;">
-            {{config('river.river')[$post->river_id]}}
+            {{ $post->riverName}}
           </span>
         </td>
         <td class="bd-placeholder-img card-img-top border border-0">
