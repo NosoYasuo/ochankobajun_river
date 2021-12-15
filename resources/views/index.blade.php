@@ -12,15 +12,17 @@
         @include('common.errors')
         <!-- バリデーションエラーの表示に使用-->
 
-
+        {{-- スクレイピング結果表示 --}}
         <div>{{$title}}</div>
         <div>{{$info}}</div>
 
+        {{-- ログイン時のみ表示 --}}
         @auth
-        <!-- Button trigger modal -->
+        <!-- モーダルを表示させるボタン-->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         投稿してみる
         </button>
+
         <a href="{{ url('myriver/'.Auth::user()->river_id) }}">自分の登録した川へ</a>
         <a href="{{ url('mypage')}}">マイページ</a>
         @endif
@@ -33,15 +35,13 @@
                 <h5 class="modal-title" id="exampleModalLabel">投稿</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <!-- 本登録フォーム -->
+              <!-- 登録フォーム -->
               <form action="{{ url('posts') }}" method="POST" class="form-horizontal" enctype= multipart/form-data>
                 {{ csrf_field() }}
               <div class="modal-body">
-                <!-- 本のタイトル -->
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <input type="text" name="message" class="form-control" placeholder="本文">
-                    </div>
+                <div class="col-sm-6">
+                    <input type="text" name="title" class="form-control" placeholder="タイトル">
+                    <input type="text" name="message" class="form-control" placeholder="本文">
                 </div>
                 {{-- プルダウンで川を選択 --}}
                 <select name="river_id">
@@ -50,12 +50,15 @@
                     {{-- <option value="{{ $index }}" {{ old('river_id') === $river_id ? "selected" : ""}}>{{ $name }}</option> --}}
                 @endforeach
                 </select>
+
+                {{-- youtubeのIDを入れるinput --}}
                 <input type="text" id="myImage" name="y_id" class="form-control" placeholder="youtube ID">
+                {{-- fileを選択するinput --}}
                 <input type="file" id="myImage" name="file_name" class="form-control">
-                {{-- 画像を表示 --}}
+                {{-- 画像を表示させようとしてるけど動いていない --}}
                 <div style='width:300px; height:300px;'><img id="preview" style="width:100%; height:100%;"></div>
               </div>
-              <!-- 本 登録ボタン -->
+              <!-- 登録ボタン -->
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Save</button>
               </div>
@@ -68,7 +71,6 @@
     </div>
 
     {{-- 一覧表示 --}}
-
         @if (count($posts) > 0)
         <div class="card-body">
             <div class="card-body">
@@ -83,6 +85,9 @@
                         @foreach ($posts as $post)
                             <tr>
                                 <!-- 本タイトル -->
+                                <td class="table-text">
+                                    <div>{{ $post->title}}</div>
+                                </td>
                                 <td class="table-text">
                                     <div>{{ $post->message}}</div>
                                 </td>
@@ -107,7 +112,6 @@
                                 @endswitch
                                 </td>
                                 <td class="table-text">
-
                                     @if ($post->comments)
                                     <div>コメント数:{{$post->comments_count}}</div>
                                         @foreach ($post->comments as $comment)

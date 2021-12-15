@@ -15,11 +15,12 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->text('message');
             $table->text('file_name')->nullable();
             $table->text('y_id')->nullable();
-            $table->string('file_ext')->nullable();
-            $table->string('river_id');
+            $table->integer('file_ext')->nullable();
+            $table->integer('river_id');
             $table->string('address', 100)->nullable();
             $table->float('latitude', 9, 6)->nullable();
             $table->float('longitude', 9, 6)->nullable();
