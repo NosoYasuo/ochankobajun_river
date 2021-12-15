@@ -48,7 +48,7 @@
             style="max-width :373px; height: 210px;"></video>
           @break
           @case(3)
-          <iframe width="373" height="210"
+          <iframe width="100%" height="240"
             src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
