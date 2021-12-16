@@ -7,3 +7,10 @@ $('#myImage').on('change', function (e) {
     }
     reader.readAsDataURL(e.target.files[0]);
 });
+
+//セレクトボックスからの検索をかけれるようにする
+$(function() {
+    $('.test-select2').select2({
+    language: "ja" //日本語化
+  });
+})
