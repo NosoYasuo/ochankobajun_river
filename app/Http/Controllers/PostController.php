@@ -24,7 +24,7 @@ class PostController extends Controller
         $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
 
         $posts = Post::withCount('likes')->withCount('comments')->orderBy('id', 'desc')->take(10)->get();
-
+        // dd($posts);
         return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
     }
 

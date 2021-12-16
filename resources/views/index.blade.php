@@ -5,8 +5,6 @@
             color: pink;
         }
     </style>
-    <!-- Bootstrapの定形コード… -->
-    <div class="card-body">
 
         <!-- バリデーションエラーの表示に使用-->
         @include('common.errors')
@@ -16,18 +14,9 @@
         <div>{{$title}}</div>
         <div>{{$info}}</div>
 
-        {{-- ログイン時のみ表示 --}}
-        @auth
-        <!-- モーダルを表示させるボタン-->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        投稿してみる
-        </button>
-
-
-        <a href="{{ url('myriver/'.Auth::user()->river_id) }}">自分の登録した川へ</a>
-        <a href="{{ url('mypage')}}">マイページ</a>
-        @endif
-
+        {{-- modal --}}
+        @include('post')
+        {{-- modal end--}}
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -71,21 +60,10 @@
         </div>
         <!-- Modal end-->
 
-
-
-
     {{-- 一覧表示 --}}
     @if (count($posts) > 0)
-        <table class="table table-striped task-table">
-            <!-- テーブルヘッダ -->
-            <thead>
-                <th>投稿一覧</th>
-                <th>&nbsp;</th>
-            </thead>
             <!-- テーブル本体 -->
-            @include('post')
-        </table>
-    </div>
+            @include('table')
 {{-- 画像をinput fileで入れた時に表示させるためのJS だけど稼働してない --}}
 <script src="{{ asset('js/index.js') }}"></script>
     @endif
