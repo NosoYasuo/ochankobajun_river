@@ -1,11 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <style>
-        .liked {
-            color: pink;
-        }
-    </style>
-
         <!-- バリデーションエラーの表示に使用-->
         @include('common.errors')
         <!-- バリデーションエラーの表示に使用-->
