@@ -91,6 +91,9 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/like.js') }}"></script>
+
+    {{-- 画像をinput fileで入れた時に表示させるためのJS だけど稼働してない --}}
+<script src="{{ asset('js/index.js') }}"></script>
+<script src="{{ asset('js/like.js') }}"></script>
 </body>
 </html>

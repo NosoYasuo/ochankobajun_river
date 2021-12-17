@@ -15,7 +15,7 @@
             <input type="text" name="message" class="form-control" placeholder="本文">
         </div>
         {{-- プルダウンで川を選択 --}}
-        <select name="river_id" >
+        <select name="river_id">
             <option> </option>
         @foreach(config('river.river') as $index => $name)
             <option name="river_id" value="{{ $index }}">{{ $name }}</option>
