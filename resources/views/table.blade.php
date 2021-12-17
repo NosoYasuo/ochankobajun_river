@@ -84,7 +84,7 @@
                   @endforeach
               @endif
               {{-- mypage以外でコメントの投稿ができるようにしています --}}
-              @if (!url('mypage'))
+              @if (!Request::is('mypage'))
               <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
                   {{ csrf_field() }}
                   <input id=comment type="text" name=comment placeholder="コメント記入欄">
