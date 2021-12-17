@@ -73,6 +73,7 @@
 }
 
 body {
+  color: #5e5e5e;
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
