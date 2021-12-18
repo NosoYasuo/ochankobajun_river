@@ -1,6 +1,17 @@
 <table class="table table-borderless d-flex align-items-center w-100">
   <tbody class="card-body w-100" style="display:flex; flex-direction: column; padding: 0;">
     @foreach ($posts as $post)
+      @if(Request::is('myriver/*'))
+        <tr class="card border border-0 mx-auto w-100 px-1">
+          <td>
+            @if($loop->iteration === 3)
+              @foreach(config("river.youtube_id.".$river_id) as $y_id)
+                  <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              @endforeach
+            @endif
+          </td>
+        </tr>
+      @endif
     <tr class="card border border-0 mx-auto w-100 px-1">
       <!-- <tr style=" display:flex; flex-direction: column;"> -->
       <!-- タイトル -->
@@ -48,7 +59,6 @@
       <!--いいね-->
       <td class="justify-content-center">
         <div class="d-flex justify-content-between">
-
           {{-- ログイン時の表示 --}}
           @auth
           @if (!$post->isLikedBy(Auth::user()))
@@ -98,3 +108,4 @@
     @endforeach
   </tbody>
 </table>
+<script></script>
