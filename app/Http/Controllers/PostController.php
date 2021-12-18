@@ -88,6 +88,8 @@ class PostController extends Controller
             $file_ext = 2;
         } elseif ($request->y_id) {
             $file_ext = 3;
+        }else{
+            $file_ext = "";
         }
 
         $user = Auth::user();
