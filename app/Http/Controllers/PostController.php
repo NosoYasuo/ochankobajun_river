@@ -60,19 +60,6 @@ class PostController extends Controller
                     ->withErrors($validator);
             }
 
-        // //youtube_id の扱い
-        //     /// Youtube動画のURL
-        //     $video_url = 'https://www.youtube.com/watch?v=' . $request->y_id;
-        //     /// oEmebdからメタ情報取得して表示
-        //     $oembed_url = "https://www.youtube.com/oembed?url={$video_url}&format=json";
-        //     $ch = curl_init($oembed_url);
-        //     curl_setopt_array($ch, [
-        //         CURLOPT_RETURNTRANSFER => 1
-        //     ]);
-        //     $resp = curl_exec($ch);
-        //     $metas = json_decode($resp, true);
-
-
         //画像の扱いに関して
         if ($file = $request->file_name) {
             $fileName = $request->file('file_name')->store('uploads', "public");
@@ -88,7 +75,10 @@ class PostController extends Controller
             $file_ext = 2;
         } elseif ($request->y_id) {
             $file_ext = 3;
+        }else {
+            $file_ext = "";
         }
+
 
         $user = Auth::user();
         $posts = new Post;
@@ -105,6 +95,7 @@ class PostController extends Controller
         $posts->longitude = $request->longitude;
         $posts->user_id = $user->id;
         $posts->user_name = $user->name;
+        $posts->caution = $request->caution;
         $posts->save();
         return redirect('/');
     }
