@@ -80,8 +80,6 @@
             <span class="like-counter">{{$post->likes_count}}</span>
           </span>
           @endguest
-
-
           {{-- コメント表示 --}}
           <div class="d-flex">
             <div>コメント</div>
@@ -96,7 +94,7 @@
         @endif
         {{-- mypage以外でコメントの投稿ができるようにしています --}}
         @if (!Request::is('mypage'))
-        <form action="{{ url('comment') }}" method="POST" class="form-horizontal border-bottom pb-4">
+        <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
           {{ csrf_field() }}
           <input id=comment type="text" name=comment placeholder="コメント記入欄">
           <input type="hidden" id=post_id name=post_id value="{{$post->id}}">
