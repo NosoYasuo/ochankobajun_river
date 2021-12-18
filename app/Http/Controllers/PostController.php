@@ -81,6 +81,10 @@ class PostController extends Controller
             $file_ext = "";
         }
 
+        if(!$request->caution){
+            $request->caution=0;
+        }
+
 
         $user = Auth::user();
         $posts = new Post;

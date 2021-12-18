@@ -2,15 +2,9 @@
   <tbody class="card-body w-100" style="display:flex; flex-direction: column; padding: 0;">
     @foreach ($posts as $post)
       @if(Request::is('myriver/*'))
-        <tr class="card border border-0 mx-auto w-100 px-1">
-          <td>
-            @if($loop->iteration === 3)
-              @foreach(config("river.youtube_id.".$river_id) as $y_id)
-                  <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              @endforeach
-            @endif
-          </td>
-        </tr>
+        @if($loop->iteration === 3)
+          @include('youtube')
+        @endif
       @endif
     <tr class="card border border-0 mx-auto w-100 px-1">
       <!-- <tr style=" display:flex; flex-direction: column;"> -->
@@ -33,13 +27,13 @@
         <!-- <td class="table-text"> -->
         @switch($post->file_ext)
         @case(1)
-        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="width: 100%; height: 280px; object-fit: cover;" class="img-responsive center-block">
+        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width: 100%; height: 280px; object-fit: cover;" class="img-responsive center-block">
         @break
         @case(2)
-        <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :373px; height: 210px;"></video>
+        <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :100%; height: 210px;"></video>
         @break
         @case(3)
-        <iframe width="100%" height="240" src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe max-width="100%" height="240" src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         @break;
         @default
         @endswitch

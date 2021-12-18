@@ -21,6 +21,7 @@ class PostFactory extends Factory
             'user_name' => $this->faker->name(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
+            'admin' => 0,
         ];
     }
 }

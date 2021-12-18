@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/mypage', [PostController::class, 'myPage']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/comment', [PostController::class, 'comment']);
-    Route::get('/info', [PostController::class, 'scrape']);
+    Route::get('/info', [PostController::class, 'scrape'])->middleware('checkadmin');
     Route::post('/like', [LikeController::class, 'like']);
     Route::post('myriver/like', [LikeController::class, 'like']);
 
