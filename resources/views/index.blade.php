@@ -5,8 +5,10 @@
         <!-- バリデーションエラーの表示に使用-->
 
         {{-- スクレイピング結果表示 --}}
-        <div>{{$title}}</div>
-        <div>{{$info}}</div>
+        <div class="w-50 m-auto" style="padding-bottom: 18px;">
+          <div>{{$title}}</div>
+          <div>{{$info}}</div>
+        </div>
 
         {{-- modal --}}
         @include('post')
