@@ -105,7 +105,7 @@ class PostController extends Controller
         $posts->save();
 
         if ($request->caution == 1) {
-            Mail::to("sample@yahoo.co.jp")->send(new CautionMail($posts));
+            Mail::to("kobajunoasis@yahoo.co.jp")->send(new CautionMail($posts));
         }
         return redirect('/');
     }
