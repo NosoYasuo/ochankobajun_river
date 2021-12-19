@@ -32,19 +32,6 @@
         @break;
         @default
         @endswitch
-        {{-- </td>
-              <td class="border-bottom pb-4 justify-content-center">
-                <span class="likes">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" style="color: #E96A6A;"
-                  viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd"
-                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clip-rule="evenodd" />
-                </svg>
-                <!-- <i class="fas fa-heart heart"></i> -->
-                <span class="like-counter" style="vertical-align: sub;">{{$post->likes_count}}</span>
-        </span>
-      </td> --}}
       <!--いいね-->
       <td class="justify-content-center">
         <div class="d-flex justify-content-between">
