@@ -24,6 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return 'myriver/' . Auth::user()->river_id;
+        return redirect('/');
     }
 }
