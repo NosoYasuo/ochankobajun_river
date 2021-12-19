@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="river_id" class="col-md-4 col-form-label text-md-right">{{ __('好きな川') }}</label>
+                            <label for="river_id" class="col-md-4 col-form-label text-md-right">{{ __('マイリバー(好きな川)') }}</label>
                             <div class="col-md-6">
                                 <select name="river_id">
                                 @foreach(config('river.river') as $index => $name)
