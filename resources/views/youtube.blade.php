@@ -1,4 +1,4 @@
-<tr class="card border border-0 mx-auto w-100 px-1">
+<tr class="card mx-auto w-100 px-1 py-2" style="border: none; border-bottom: 0.5px solid #81D8D0">
   <td class="table-text mt-1 h4 m-0 p-0 px-2 mt-4" style="color: #48908A;">
     <div class="title">{{ config("river.river.".$river_id)}}</div>
   </td>

@@ -100,25 +100,24 @@
       </td>
     </tr>
     @if(Request::is('myriver/*'))
-    <tr class="card border border-0 mx-auto w-100 px-1">
-      <td>
-        @if (count ($posts) < 3) @if (count ($posts)==1) @foreach(config("river.youtube_id.".$river_id) as $y_id) <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          @endforeach
-          @else
-          @if ($loop->iteration == 1)
+        @if (count ($posts) < 3)
+          @if (count ($posts)==1)
+            @foreach(config("river.youtube_id.".$river_id) as $y_id)
+              @include('youtube')
+            @endforeach
+            @else
+              @if ($loop->iteration == 1)
+                @foreach(config("river.youtube_id.".$river_id) as $y_id)
+                @include('youtube')
+                @endforeach
+              @endif
+          @endif
+        @endif
+        @if($loop->iteration === 3)
           @foreach(config("river.youtube_id.".$river_id) as $y_id)
-          <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          @include('youtube')
           @endforeach
-          @endif
-          @endif
-          @endif
-          @if($loop->iteration === 3)
-          @foreach(config("river.youtube_id.".$river_id) as $y_id)
-          <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          @endforeach
-          @endif
-      </td>
-    </tr>
+        @endif
     @endif
     @endforeach
   </tbody>
