@@ -22,13 +22,13 @@
         <!-- <td class="table-text"> -->
         @switch($post->file_ext)
         @case(1)
-        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="width: 100%; height: 280px; object-fit: cover;" class="img-responsive center-block">
+        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width: 100%; height: 280px; object-fit: cover;" class="img-responsive center-block">
         @break
         @case(2)
-        <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :373px; height: 210px;"></video>
+        <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :100%; height: 210px;"></video>
         @break
         @case(3)
-        <iframe width="100%" height="240" src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe max-width="100%" height="240" src="https://www.youtube.com/embed/{{$post->y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$post->y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         @break;
         @default
         @endswitch

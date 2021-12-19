@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Goutte;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CautionMail;
 
 class PostController extends Controller
 {
@@ -23,7 +25,7 @@ class PostController extends Controller
         $title =  $crawler->filter('td.bColorThinBlue')->text();
         $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
 
-        $posts = Post::withCount('likes')->withCount('comments')->orderBy('id', 'desc')->take(10)->get();
+        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->orderBy('id', 'desc')->take(10)->get();
         // dd($posts);
         return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
     }
@@ -60,19 +62,6 @@ class PostController extends Controller
                     ->withErrors($validator);
             }
 
-        // //youtube_id の扱い
-        //     /// Youtube動画のURL
-        //     $video_url = 'https://www.youtube.com/watch?v=' . $request->y_id;
-        //     /// oEmebdからメタ情報取得して表示
-        //     $oembed_url = "https://www.youtube.com/oembed?url={$video_url}&format=json";
-        //     $ch = curl_init($oembed_url);
-        //     curl_setopt_array($ch, [
-        //         CURLOPT_RETURNTRANSFER => 1
-        //     ]);
-        //     $resp = curl_exec($ch);
-        //     $metas = json_decode($resp, true);
-
-
         //画像の扱いに関して
         if ($file = $request->file_name) {
             $fileName = $request->file('file_name')->store('uploads', "public");
@@ -88,9 +77,14 @@ class PostController extends Controller
             $file_ext = 2;
         } elseif ($request->y_id) {
             $file_ext = 3;
-        }else{
+        }else {
             $file_ext = "";
         }
+
+        if(!$request->caution){
+            $request->caution=0;
+        }
+
 
         $user = Auth::user();
         $posts = new Post;
@@ -107,7 +101,12 @@ class PostController extends Controller
         $posts->longitude = $request->longitude;
         $posts->user_id = $user->id;
         $posts->user_name = $user->name;
+        $posts->caution = $request->caution;
         $posts->save();
+
+        if ($request->caution == 1) {
+            Mail::to("kobajunoasis@yahoo.co.jp")->send(new CautionMail($posts));
+        }
         return redirect('/');
     }
 
@@ -159,7 +158,7 @@ class PostController extends Controller
     //myriverへ移動
     public function myRiver($river_id)
     {
-        $posts = Post::withCount('likes')->withCount('comments')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
+        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->where('river_id', $river_id)->orderBy('id', 'desc')->get();
         return view('myriver', ['posts' => $posts, 'river_id' => $river_id]);
     }
 
@@ -208,7 +207,9 @@ class PostController extends Controller
         $title =  $crawler->filter('td.bColorThinBlue')->text();
         $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
 
-        return view('info', ['title' => $title, 'info' => $info]);
+        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 1)->orderBy('id', 'desc')->get();
+
+        return view('info', ['title' => $title, 'info' => $info, 'posts' => $posts]);
     }
 
 }

@@ -26,6 +26,7 @@ class CreatePostsTable extends Migration
             $table->float('longitude', 9, 6)->nullable();
             $table->integer('user_id')->unsigned();
             $table->string('user_name');
+            $table->integer('caution')->nullable();
             $table->timestamps();
         });
     }

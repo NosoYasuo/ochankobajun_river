@@ -13,6 +13,7 @@
         <div class="col-sm-6">
             <input type="text" name="title" class="form-control" placeholder="タイトル">
             <input type="text" name="message" class="form-control" placeholder="本文">
+              <input type="checkbox" value="1" name="caution" >ヒヤリハット投稿
         </div>
         {{-- プルダウンで川を選択 --}}
         <select name="river_id">
