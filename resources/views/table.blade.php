@@ -73,28 +73,54 @@
 
 
           {{-- コメント表示 --}}
-          <div class="d-flex">
+          <div class="d-flex" id={{$post->id}}>
             <div>コメント</div>
             <div>{{$post->comments_count}} 件</div>
           </div>
           <div></div>
         </div>
-        @if ($post->comments)
-        @foreach ($post->comments as $comment)
-        <div>{{$comment->comment}}</div><br>
-        @endforeach
-        @endif
-        {{-- mypage以外でコメントの投稿ができるようにしています --}}
-        @if (!Request::is('mypage'))
-        <form action="{{ url('comment') }}" method="POST" class="form-horizontal border-bottom pb-4">
-          {{ csrf_field() }}
-          <input id=comment type="text" name=comment placeholder="コメント記入欄">
-          <input type="hidden" id=post_id name=post_id value="{{$post->id}}">
-          <button id=submit type="submit" class="btn btn-primary">Save</button>
-        </form>
-        @endif
+        <div id="commentArea" class="px-4 mt-4">
+          @if ($post->comments)
+          @foreach ($post->comments as $comment)
+          <div class="small p-2" style="border-bottom: 0.5px solid #a8eae4;">{{$comment->comment}}</div><br>
+          @endforeach
+          @endif
+          {{-- mypage以外でコメントの投稿ができるようにしています --}}
+          <div class="input-group mb-3 m-auto">
+            @if (!Request::is('mypage'))
+            <form id="commentForm" action="{{ url('comment') }}" method="POST" class="form-horizontal">
+              {{ csrf_field() }}
+              <input id=comment type="text" name=comment class="form-control">
+              <input type="hidden" id=post_id name=post_id value="{{$post->id}}">
+            </form>
+            <div class="input-group-prepend">
+              <button id=submit type="submit" class="input-group-text">コメントする</button>
+            </div>
+            @endif
+          </div>
+        </div>
       </td>
     </tr>
     @endforeach
   </tbody>
 </table>
+<script>
+  // let posts = @json($posts);
+  // console.log(posts);
+  // let postId = posts.map(post => post.id)
+  // console.log(postId);
+  // postId.forEach((id) => {
+  //   console.log(id);
+  //   document.getElementById(id).addEventListener('click', () => {
+  //     //style="display: none"
+  //     document.getElementById("commentArea").style.display = 'block';
+  //     document.getElementById("commentForm").style.display = 'block';
+
+      // alert(id)
+
+      // $('commentArea').show();
+      // $('commentForm').show();
+  //   })
+
+  // })
+</script>
