@@ -70,53 +70,68 @@
           </span>
           @endguest
           {{-- コメント表示 --}}
-          <div class="d-flex">
-            <div>コメント</div>
+          <div class="d-flex" id={{$post->id}}>
+            <div><i class="far fa-comment-alt"></i> コメント</div>
             <div>{{$post->comments_count}} 件</div>
           </div>
-          <div></div>
         </div>
-        @if ($post->comments)
-        @foreach ($post->comments as $comment)
-        <div>{{$comment->comment}}</div><br>
-        @endforeach
-        @endif
+        <div id="commentArea{{$post->id}}" style="display: none" class="px-4 mt-4">
+
+          @if ($post->comments)
+          @foreach ($post->comments as $comment)
+          <div class="small p-2" style="border-bottom: 0.5px solid #a8eae4;">{{$comment->comment}}</div><br>
+
+          @endforeach
+          @endif
+        </div>
         {{-- mypage以外でコメントの投稿ができるようにしています --}}
+
         @if (!Request::is('mypage'))
-        <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
-          {{ csrf_field() }}
-          <input id=comment type="text" name=comment placeholder="コメント記入欄">
-          <input type="hidden" id=post_id name=post_id value="{{$post->id}}">
-          <button id=submit type="submit" class="btn btn-primary">Save</button>
+        <form id="commentForm{{$post->id}}" style="display: none" action="{{ url('comment') }}" method="POST" class="form-horizontal px-4">
+          <div class="input-group mb-3 m-auto">
+            {{ csrf_field() }}
+            <input id=comment type="text" name=comment class="form-control m-0">
+            <input type="hidden" id=post_id name=post_id value="{{$post->id}}">
+            <div class="input-group-prepend">
+              <button id=submit type="submit" class="input-group-text"><i class="fas fa-angle-double-up"></i></button>
+            </div>
         </form>
         @endif
       </td>
     </tr>
-      @if(Request::is('myriver/*'))
-        <tr class="card border border-0 mx-auto w-100 px-1">
-          <td>
-            @if (count ($posts) < 3)
-              @if (count ($posts) == 1)
-                @foreach(config("river.youtube_id.".$river_id) as $y_id)
-                    <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                @endforeach
-              @else
-                @if ($loop->iteration == 1)
-                  @foreach(config("river.youtube_id.".$river_id) as $y_id)
-                      <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  @endforeach
-                @endif
-              @endif
-            @endif
-            @if($loop->iteration === 3)
-              @foreach(config("river.youtube_id.".$river_id) as $y_id)
-                  <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              @endforeach
-            @endif
-          </td>
-        </tr>
-      @endif
+    @if(Request::is('myriver/*'))
+    <tr class="card border border-0 mx-auto w-100 px-1">
+      <td>
+        @if (count ($posts) < 3) @if (count ($posts)==1) @foreach(config("river.youtube_id.".$river_id) as $y_id) <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          @endforeach
+          @else
+          @if ($loop->iteration == 1)
+          @foreach(config("river.youtube_id.".$river_id) as $y_id)
+          <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          @endforeach
+          @endif
+          @endif
+          @endif
+          @if($loop->iteration === 3)
+          @foreach(config("river.youtube_id.".$river_id) as $y_id)
+          <iframe width="300" height="250" src="https://www.youtube.com/embed/{{$y_id}}?autoplay=1&mute=1&playsinline=1&loop=1&playlist={{$y_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          @endforeach
+          @endif
+      </td>
+    </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
-<script></script>
+<script>
+  let posts = @json($posts);
+  let postId = posts.map(post => post.id)
+  postId.forEach((id) => {
+    document.getElementById(id).addEventListener('click', () => {
+      //style="display: none"
+      document.getElementById("commentArea" + id).style.display = 'block';
+      document.getElementById("commentForm" + id).style.display = 'block';
+    })
+
+  })
+</script>
