@@ -88,6 +88,8 @@ class PostController extends Controller
             $file_ext = 2;
         } elseif ($request->y_id) {
             $file_ext = 3;
+        }else{
+            $file_ext = "";
         }
 
         $user = Auth::user();
@@ -157,7 +159,7 @@ class PostController extends Controller
     //myriverへ移動
     public function myRiver($river_id)
     {
-        $posts = Post::withCount('likes')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
+        $posts = Post::withCount('likes')->withCount('comments')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
         return view('myriver', ['posts' => $posts, 'river_id' => $river_id]);
     }
 
@@ -165,7 +167,7 @@ class PostController extends Controller
     public function myPage()
     {
 
-        $posts = Post::withCount('likes')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        $posts = Post::withCount('likes')->withCount('comments')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return view('mypage', ['posts' => $posts]);
     }
 
