@@ -22,7 +22,7 @@
         <!-- <td class="table-text"> -->
         @switch($post->file_ext)
         @case(1)
-        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="max-width: 100%; height: 280px; object-fit: cover;" class="img-responsive center-block">
+        <img src="{{ asset('storage/'.$post->file_name) }}" alt="" style="width: 100%; height: 280px; object-fit: cover;" class="img-responsive center-block">
         @break
         @case(2)
         <video src="{{ asset('storage/'.$post->file_name) }}" controls muted playsinline style="max-width :100%; height: 210px;"></video>
@@ -72,7 +72,6 @@
           @endif
         </div>
         {{-- mypage以外でコメントの投稿ができるようにしています --}}
-
         @if (!Request::is('mypage'))
         <form id="commentForm{{$post->id}}" style="display: none" action="{{ url('comment') }}" method="POST" class="form-horizontal px-4">
           <div class="input-group mb-3 m-auto">
@@ -117,6 +116,9 @@
       //style="display: none"
       document.getElementById("commentArea" + id).style.display = 'block';
       document.getElementById("commentForm" + id).style.display = 'block';
+      if (condition) {
+
+      }
     })
 
   })
