@@ -9,8 +9,9 @@ $('#myImage').on('change', function (e) {
 });
 
 //セレクトボックスからの検索をかけれるようにする
-$(function() {
-    $('.test-select2').select2({
-    language: "ja" //日本語化
-  });
-})
+// $(function() {
+//     $('.test-select2').select2({
+//     language: "ja" //日本語化
+//   });
+// })
+

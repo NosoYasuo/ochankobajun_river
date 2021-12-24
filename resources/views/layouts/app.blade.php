@@ -21,15 +21,19 @@
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-  <!-- Select2.css -->
+  <!-- Select2.css
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
-  <!-- Select2本体 -->
+  Select2本体 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
   <!-- Select2日本語化 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ja.js"></script>
   <!-- Styles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+  <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 
@@ -102,7 +106,7 @@
               <div class="dropdown-divider"></div>
 
 
-              <a href="https://twitter.com/tokyo_suibo" class="dropdown-item" style="color: #ffffff" onMouseOut="this.style.background=''" onMouseOver="this.style.background='#81d8d0'"> 東京都水防公式ツイッター</a>
+              <a href="https://twitter.com/tokyo_suibo" class="dropdown-item" style="color: #ffffff" onMouseOut="this.style.background=''" onMouseOver="this.style.background='#81d8d0'"><i class="fab fa-twitter"></i> 東京都水防公式ツイッター</a>
               <a href="https://www.kasen-suibo.metro.tokyo.lg.jp/im/uryosuii/tsim0102g.html" class="dropdown-item" style="color: #ffffff" onMouseOut="this.style.background=''" onMouseOver="this.style.background='#81d8d0'"><svg xmlns="http://www.w3.org/2000/svg" class="mb-1" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
                 </svg> 降雨・河川水位情報</a>
@@ -127,8 +131,14 @@
   </div>
 
   {{-- 画像をinput fileで入れた時に表示させるためのJS だけど稼働してない --}}
+  <script src="{{ asset('js/select2.min.js') }}"></script>
   <script src="{{ asset('js/index.js') }}"></script>
   <script src="{{ asset('js/like.js') }}"></script>
+  <script>
+    $(document).ready(function() {
+      $('.select-1').select2();
+    });
+  </script>
 </body>
 
 </html>
