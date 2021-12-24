@@ -32,7 +32,7 @@
         @break;
         @default
         @endswitch
-      <!--いいね-->
+        <!--いいね-->
       <td class="justify-content-center">
         <div class="d-flex justify-content-between">
           {{-- ログイン時の表示 --}}
@@ -86,29 +86,30 @@
       </td>
     </tr>
     @if(Request::is('myriver/*'))
-        @if (count ($posts) < 3)
-          @if (count ($posts)==1)
-            @foreach(config("river.youtube_id.".$river_id) as $y_id)
-              @include('youtube')
-            @endforeach
-            @else
-              @if ($loop->iteration == 1)
-                @foreach(config("river.youtube_id.".$river_id) as $y_id)
-                @include('youtube')
-                @endforeach
-              @endif
-          @endif
-        @endif
-        @if($loop->iteration === 3)
-          @foreach(config("river.youtube_id.".$river_id) as $y_id)
-          @include('youtube')
-          @endforeach
-        @endif
-    @endif
-    @endforeach
+    @if (count ($posts) < 3) @if (count ($posts)==1) @foreach(config("river.youtube_id.".$river_id) as $y_id) @include('youtube') @endforeach @else @if ($loop->iteration == 1)
+      @foreach(config("river.youtube_id.".$river_id) as $y_id)
+      @include('youtube')
+      @endforeach
+      @endif
+      @endif
+      @endif
+      @if($loop->iteration === 3)
+      @foreach(config("river.youtube_id.".$river_id) as $y_id)
+      @include('youtube')
+      @endforeach
+      @endif
+      @endif
+      @endforeach
   </tbody>
 </table>
 <script>
+  $(document).ready(function() {
+    console.log("aaaaaaaaaa");
+    $("#select2").select2({
+      dropdownParent: $("#select-wrapper"),
+    });
+  });
+
   let posts = @json($posts);
   let postId = posts.map(post => post.id)
   postId.forEach((id) => {
