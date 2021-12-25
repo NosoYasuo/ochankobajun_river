@@ -13,31 +13,35 @@ use App\Mail\CautionMail;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function run_scrape(){
         $url = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
-        $crawler = Goutte::request('GET', $url);
-        $title =  $crawler->filter('td.bColorThinBlue')->text();
-        $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
 
-        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->orderBy('id', 'desc')->take(10)->get();
-        // dd($posts);
-        return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
+        try {
+            $crawler = Goutte::request('GET', $url);
+        } catch (Exception $ex) {
+            error_log(__METHOD__ . ' Exception was encountered: ' . get_class($ex) . ' ' . $ex->getMessage());
+        }
+
+        if (count($crawler->filter('td.bColorThinBlue'))) {
+            $title =  $crawler->filter('td.bColorThinBlue')->text();
+        } else {
+            $title = "水位周知河川";
+        }
+
+        if (count($crawler->filter('td.widthWarningInfo'))) {
+            $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
+        } else {
+            $info = "取得できませんでした";
+        }
+        return [$title, $info];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index()
     {
-        //
+        list($title, $info) = $this->run_scrape();
+
+        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->orderBy('id', 'desc')->take(10)->get();
+        return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
     }
 
     /**
@@ -111,28 +115,6 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -165,7 +147,6 @@ class PostController extends Controller
     //mypageへ移動
     public function myPage()
     {
-
         $posts = Post::withCount('likes')->withCount('comments')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return view('mypage', ['posts' => $posts]);
     }
@@ -192,20 +173,11 @@ class PostController extends Controller
         $comments->post_id = $request->post_id;
         $comments->save();
         return redirect('/');
-
-        // $comments = Comment::where('post_id',$request->post_id)->get();
-        // $param = [
-        //          'comments' => $comments,
-        //          ];
-        //     return response()->json($param); //6.JSONデータをjQueryに返す
     }
 
     public function scrape(){
-        $url = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
-        $crawler = Goutte::request('GET', $url);
 
-        $title =  $crawler->filter('td.bColorThinBlue')->text();
-        $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
+        list($title, $info) = $this->run_scrape();
 
         $posts = Post::withCount('likes')->withCount('comments')->where('caution', 1)->orderBy('id', 'desc')->get();
 
