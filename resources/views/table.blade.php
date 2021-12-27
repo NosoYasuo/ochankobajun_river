@@ -104,11 +104,11 @@
 </table>
 <script>
   $(document).ready(function() {
-    console.log("aaaaaaaaaa");
     $("#select2").select2({
       dropdownParent: $("#select-wrapper"),
     });
   });
+
 
   let posts = @json($posts);
   let postId = posts.map(post => post.id)
