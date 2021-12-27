@@ -106,6 +106,8 @@
   $(document).ready(function() {
     $("#select2").select2({
       dropdownParent: $("#select-wrapper"),
+      dropdownAutoWidth: true,
+      width: 'auto'
     });
   });
 
