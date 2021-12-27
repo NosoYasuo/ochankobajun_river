@@ -136,7 +136,7 @@
   <script src="{{ asset('js/like.js') }}"></script>
   <script>
     $(document).ready(function() {
-      $('.select-1').select2();
+      $("#select3").select2();
     });
   </script>
 </body>
