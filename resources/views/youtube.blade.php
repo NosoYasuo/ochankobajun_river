@@ -11,7 +11,7 @@
     </span>
   </td>
   <td class="table-text mt-1">
-    <div class="title">東京都防災チャンネルからの映像になります</div>
+    <div class="title">東京都水防チャンネルからの映像になります</div>
   </td>
   <td>
       @foreach(config("river.youtube_id.".$river_id) as $y_id)
