@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class,
+        NotificationChannels\WebPush\WebPushServiceProvider::class,
 
     ],
 

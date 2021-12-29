@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::post('/news/subscription', [NewsController::class, 'subscription'])->name('subscription');
 
     // Route::delete('/book/{book}', function (Book $book) {
     //     //
