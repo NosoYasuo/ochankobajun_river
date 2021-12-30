@@ -8,7 +8,6 @@
         <div class="w-50 m-auto" style="padding-bottom: 18px;">
           <div>{{$title}}</div>
           <div>{{$info}}</div>
-          {{phpinfo()}}
         </div>
 
         {{-- modal --}}

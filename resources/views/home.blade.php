@@ -32,6 +32,8 @@ if ('serviceWorker' in navigator) {
     console.error('Service Worker Error', error)
   })
 }
+
+
 /**
  * サービスワーカーを初期化する
  * 初期化では、プッシュ通知用の情報をサーバに送ることになる
@@ -60,6 +62,7 @@ function initialiseServiceWorker() {
       })
   })
 }
+
 /**
  * サーバに自身の情報を送付し、プッシュ通知を送れるようにする
  */
@@ -74,6 +77,7 @@ function subscribe(registration) {
     updateSubscription(subscription)
   })
 }
+
 /**
  * 購読情報を更新する
  *
@@ -82,14 +86,23 @@ function updateSubscription(subscription) {
   var key = subscription.getKey('p256dh')
   var token = subscription.getKey('auth')
   var data = new FormData()
+  console.log(key);
   data.append('endpoint', subscription.endpoint)
-  data.append('key', key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null),
+  data.append('key', key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null)
   data.append('token', token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null)
-  // サーバに通信し、endpointを渡す
-  fetch('/news/subscription', {
+  //サーバに通信し、endpointを渡す
+  fetch('news/subscription', {
     method: 'POST',
-    body: data
-  }).then(() => console.log('Subscription ended'))
+    body: data,
+    headers: {
+    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+    }
+  })
+  .then(() => console.log('Subscription ended'))
+  .catch(error => {
+    console.log(error);
+  });
+
 }
 function urlBase64ToUint8Array (base64String) {
   var padding = '='.repeat((4 - base64String.length % 4) % 4);

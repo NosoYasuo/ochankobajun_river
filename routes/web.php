@@ -5,6 +5,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NewsController;
+use App\Models\User;
+
+use App\Notifications\NewsPush;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +40,20 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::post('/news/subscription', [NewsController::class, 'subscription'])->name('subscription');
+    Route::post('/news/subscription', [NewsController::class,'subscription'])->name('subscription');
 
     // Route::delete('/book/{book}', function (Book $book) {
     //     //
     // });
+
+    // 全ユーザーにプッシュ通知を試みる
+    Route::get('web_push_test', function () {
+        $users = User::all();
+        foreach ($users as $user) {
+            $user->notify(new NewsPush());
+        }
+    });
+
 
 });
 
