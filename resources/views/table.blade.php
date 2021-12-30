@@ -119,9 +119,6 @@
       //style="display: none"
       document.getElementById("commentArea" + id).style.display = 'block';
       document.getElementById("commentForm" + id).style.display = 'block';
-      if (condition) {
-
-      }
     })
 
   })

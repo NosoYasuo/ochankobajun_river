@@ -26,7 +26,7 @@
             </div>
 
             {{-- youtubeのIDを入れるinput --}}
-            {{-- <input type="text" name="y_id" class="form-control" placeholder="youtube ID"> --}}
+            <input type="text" name="y_id" class="form-control" placeholder="youtube ID">
             {{-- fileを選択するinput --}}
             <input type="file" id="myImage" name="file_name" class="form-control">
             {{-- 画像を表示させようとしてるけど動いていない --}}
