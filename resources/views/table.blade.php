@@ -104,15 +104,6 @@
   </tbody>
 </table>
 <script>
-  $(document).ready(function() {
-    $("#select1").select2({
-      dropdownParent: $("#select-wrapper"),
-      dropdownAutoWidth: true,
-      width: 'auto'
-    });
-  });
-
-
   let posts = @json($posts);
   let postId = posts.map(post => post.id)
   postId.forEach((id) => {

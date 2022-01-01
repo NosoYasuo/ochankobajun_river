@@ -15,7 +15,7 @@
             <input type="text" name="message" class="form-control mb-1" placeholder="本文" value="{{old('message')}}" style="height: 100px; border: none; border-bottom: 0.5px solid #81D8D0; background-color: white;">
             {{-- プルダウンで川を選択 --}}
             <div id="select-wrapper" class="mb-1">
-              <select name="river_id" id="select1" style="min-width: 300px">
+              <select name="river_id" id="select2" style="min-width: 300px">
                 @foreach(config('river.river') as $index => $name)
                 <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
                 @endforeach

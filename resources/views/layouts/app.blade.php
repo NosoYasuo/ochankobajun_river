@@ -144,6 +144,13 @@
   <script src="{{ asset('js/like.js') }}"></script>
   <script>
     $(document).ready(function() {
+      $("#select2").select2({
+        dropdownParent: $("#select-wrapper"),
+        dropdownAutoWidth: true,
+        width: 'auto'
+      });
+    });
+    $(document).ready(function() {
       $("#select3").select2();
     });
     $(document).ready(function() {
