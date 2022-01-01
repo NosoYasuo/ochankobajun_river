@@ -86,25 +86,26 @@
       </td>
     </tr>
     @if(Request::is('myriver/*'))
-    @if (count ($posts) < 3) @if (count ($posts)==1) @foreach(config("river.youtube_id.".$river_id) as $y_id) @include('youtube') @endforeach @else @if ($loop->iteration == 1)
-      @foreach(config("river.youtube_id.".$river_id) as $y_id)
-      @include('youtube')
-      @endforeach
+      @if (count ($posts) < 3)
+        @if (count ($posts)==1)
+            @include('youtube')
+        @else
+            @if ($loop->iteration == 2)
+              @include('youtube')
+            @endif
+        @endif
+      @else
+        @if($loop->iteration === 3)
+              @include('youtube')
+        @endif
       @endif
-      @endif
-      @endif
-      @if($loop->iteration === 3)
-      @foreach(config("river.youtube_id.".$river_id) as $y_id)
-      @include('youtube')
-      @endforeach
-      @endif
-      @endif
-      @endforeach
+    @endif
+    @endforeach
   </tbody>
 </table>
 <script>
   $(document).ready(function() {
-    $("#select2").select2({
+    $("#select1").select2({
       dropdownParent: $("#select-wrapper"),
       dropdownAutoWidth: true,
       width: 'auto'

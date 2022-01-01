@@ -45,7 +45,7 @@
                 <select name="river_id" id="select3">
                   @foreach(config('river.river') as $index => $name)
                   <option name="river_id" value="{{ $index }}">{{ $name }}</option>
-                  {{-- <option value="{{ $index }}" {{ old('river_id') === $river_id ? "selected" : ""}}>{{ $name }}</option> --}}
+                  {{-- <option value="{{ $index }}" {{ old('river_id') === $index  ? "selected" : ""}}>{{ $name }}</option> --}}
                   @endforeach
                 </select>
               </div>

@@ -21,7 +21,7 @@
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
+  {{-- fontawsome --}}
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
   <!-- Select2.css
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
@@ -49,6 +49,15 @@
         <button type="button" class="input_button w-75 m-auto py-1 border-0 rounded-pill text-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
           現在の川の様子をシェアしよう
         </button>
+        {{-- 各川へ検索して飛べる --}}
+        <form  action="{{ url('change') }}" method="GET" class="form-horizontal px-4">
+          <select class="river_id" name="river_id" id="select4" style="min-width: 300px">
+            @foreach(config('river.river') as $index => $name)
+            <option value="{{ $index }}">{{ $name }}</option>
+            @endforeach
+          </select>
+          <button id=submit type="submit" class="input-group-text"><i class="fas fa-angle-double-up"></i></button>
+        </form>
         @endif
 
         {{-- ハンバーガーメニュー --}}
@@ -129,14 +138,16 @@
       @yield('content')
     </main>
   </div>
-
-  {{-- 画像をinput fileで入れた時に表示させるためのJS だけど稼働してない --}}
+  {{-- JS --}}
   <script src="{{ asset('js/select2.min.js') }}"></script>
   <script src="{{ asset('js/index.js') }}"></script>
   <script src="{{ asset('js/like.js') }}"></script>
   <script>
     $(document).ready(function() {
       $("#select3").select2();
+    });
+    $(document).ready(function() {
+      $("#select4").select2();
     });
   </script>
 </body>

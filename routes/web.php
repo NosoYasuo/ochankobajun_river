@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::get('/myriver/{river_id}', [PostController::class, 'myRiver']);
     Route::get('/mypage', [PostController::class, 'myPage']);
+    Route::get('/change', [PostController::class, 'change']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/comment', [PostController::class, 'comment']);
     Route::get('/info', [PostController::class, 'scrape'])->middleware('checkadmin');

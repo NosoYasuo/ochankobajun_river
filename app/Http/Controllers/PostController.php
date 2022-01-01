@@ -178,10 +178,13 @@ class PostController extends Controller
     public function scrape(){
 
         list($title, $info) = $this->run_scrape();
-
         $posts = Post::withCount('likes')->withCount('comments')->where('caution', 1)->orderBy('id', 'desc')->get();
-
         return view('info', ['title' => $title, 'info' => $info, 'posts' => $posts]);
+    }
+
+    public function change(Request $request)
+    {
+        return redirect('/myriver/'.$request->river_id);
     }
 
 }

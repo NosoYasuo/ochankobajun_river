@@ -11,25 +11,22 @@
         {{ csrf_field() }}
         <div class="modal-body">
           <div class="col-sm-6 mb-2">
-            <input type="text" name="title" class="form-control mb-1" placeholder="タイトル" style="border: none; border-bottom: 0.5px solid #81D8D0; background-color: white;">
-            <input type="text" name="message" class="form-control mb-1" placeholder="本文" style="height: 100px; border: none; border-bottom: 0.5px solid #81D8D0; background-color: white;">
+            <input type="text" name="title" class="form-control mb-1" placeholder="タイトル" value="{{old('title')}}" style="border: none; border-bottom: 0.5px solid #81D8D0; background-color: white;">
+            <input type="text" name="message" class="form-control mb-1" placeholder="本文" value="{{old('message')}}" style="height: 100px; border: none; border-bottom: 0.5px solid #81D8D0; background-color: white;">
             {{-- プルダウンで川を選択 --}}
             <div id="select-wrapper" class="mb-1">
-              <select name="river_id" id="select2" style="min-width: 300px">
-                <!-- <option> </option> -->
+              <select name="river_id" id="select1" style="min-width: 300px">
                 @foreach(config('river.river') as $index => $name)
-                <option name="river_id" value="{{ $index }}">{{ $name }}</option>
-                {{-- <option value="{{ $index }}" {{ old('river_id') === $river_id ? "selected" : ""}}>{{ $name }}</option> --}}
+                <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
                 @endforeach
               </select>
               <input type="checkbox" value="1" name="caution">ヒヤリハット投稿
             </div>
-
             {{-- youtubeのIDを入れるinput --}}
-            <input type="text" name="y_id" class="form-control" placeholder="youtube ID">
+            <input type="text" name="y_id" class="form-control" placeholder="youtube ID" value="{{old('y_id')}}">
             {{-- fileを選択するinput --}}
             <input type="file" id="myImage" name="file_name" class="form-control">
-            {{-- 画像を表示させようとしてるけど動いていない --}}
+            {{-- 画像を表示 --}}
             <div style='width:300px; height:300px;'><img id="preview" style="width:100%; height:100%;"></div>
           </div>
           <!-- 登録ボタン -->
