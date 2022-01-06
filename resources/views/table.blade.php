@@ -6,6 +6,13 @@
       <!-- タイトル -->
       <td class="table-text mt-1 h4 m-0 p-0 px-2 mt-4" style="color: #48908A;">
         <div class="title">{{ $post->title}}</div>
+        {{-- 削除ボタン --}}
+        @if(Request::is('mypage'))
+          <form  action="{{ url('delete/'.$post->id) }}" method="GET" class="form-horizontal px-4">
+            {{ csrf_field() }}
+            <button type="submit">削除</button>
+          </form>
+        @endif
       </td>
       <td class="table-text d-flex justify-content-between m-0 p-0 px-2 pt-1">
         <div class="text-secondary small">

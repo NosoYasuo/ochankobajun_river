@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::post('/like', [LikeController::class, 'like']);
     Route::post('myriver/like', [LikeController::class, 'like']);
 
+    Route::get('delete/{post}',  [PostController::class, 'destroy']); //削除機能
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 

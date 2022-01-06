@@ -53,7 +53,7 @@
         <form  action="{{ url('change') }}" method="GET" class="form-horizontal px-4">
           <select class="river_id" name="river_id" id="select4" style="min-width: 300px">
             @foreach(config('river.river') as $index => $name)
-            <option value="{{ $index }}">{{ $name }}</option>
+            <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
             @endforeach
           </select>
           <button id=submit type="submit" class="input-group-text"><i class="fas fa-angle-double-up"></i></button>
