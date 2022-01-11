@@ -19,14 +19,15 @@ class CreatePostsTable extends Migration
             $table->text('message');
             $table->text('file_name')->nullable();
             $table->text('y_id')->nullable();
-            $table->integer('file_ext')->nullable();
-            $table->integer('river_id');
+            $table->bigInteger('file_ext')->nullable();
+            $table->bigInteger('river_id');
             $table->string('address', 100)->nullable();
             $table->float('latitude', 9, 6)->nullable();
             $table->float('longitude', 9, 6)->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('user_name');
-            $table->integer('caution')->nullable();
+            $table->bigInteger('caution')->nullable();
+            $table->bigInteger('type')->nullable();  //0 投稿 1行政 2企業
             $table->timestamps();
         });
     }

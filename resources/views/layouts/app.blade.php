@@ -49,6 +49,13 @@
         <button type="button" class="input_button w-75 m-auto py-1 border-0 rounded-pill text-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
           現在の川の様子をシェアしよう
         </button>
+
+        @auth
+        {{-- modal --}}
+        @include('post')
+        {{-- modal end--}}
+        @endif
+
         {{-- 各川へ検索して飛べる --}}
         <form  action="{{ url('change') }}" method="GET" class="form-horizontal px-4">
           <select class="river_id" name="river_id" id="select4" style="min-width: 300px">
@@ -155,6 +162,9 @@
     });
     $(document).ready(function() {
       $("#select4").select2();
+    });
+    $(document).ready(function() {
+      $("#select5").select2();
     });
   </script>
 </body>

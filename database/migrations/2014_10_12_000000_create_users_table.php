@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->bigInteger('river_id');
+            $table->bigInteger('city_id');
             $table->bigInteger('admin');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

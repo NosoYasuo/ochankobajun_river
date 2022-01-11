@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Goutte;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CautionMail;
+use Encore\Admin\Grid\Filter\Where;
 
 class PostController extends Controller
 {
@@ -106,10 +108,16 @@ class PostController extends Controller
         $posts->user_id = $user->id;
         $posts->user_name = $user->name;
         $posts->caution = $request->caution;
+        $posts->type = $request->type;
         $posts->save();
 
         if ($request->caution == 1) {
-            Mail::to("kobajunoasis@yahoo.co.jp")->send(new CautionMail($posts));
+            foreach (config("river.city.".$request->river_id) as $data) {
+                $users = User::where([['city_id', '=', $data],['admin', '=', 1]])->get();
+                foreach ($users as $user) {
+                    Mail::to($user->email)->send(new CautionMail($posts));
+                }
+            }
         }
         return redirect('/');
     }
@@ -142,8 +150,10 @@ class PostController extends Controller
     //myriverへ移動
     public function myRiver($river_id)
     {
-        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->where('river_id', $river_id)->orderBy('id', 'desc')->get();
-        return view('myriver', ['posts' => $posts, 'river_id' => $river_id]);
+        $posts = Post::withCount('likes')->withCount('comments')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
+        $admins = Post::withCount('likes')->withCount('comments')->where('type', 1)->where('river_id', $river_id)->orderBy('id', 'desc')->orderBy('id', 'desc')->get();
+        $privates = Post::withCount('likes')->withCount('comments')->where('type', 2)->where('river_id', $river_id)->orderBy('id', 'desc')->orderBy('id', 'desc')->get();
+        return view('myriver', ['posts' => $posts,'admins' => $admins, 'privates' => $privates, 'river_id' => $river_id]);
     }
 
     //mypageへ移動
@@ -177,11 +187,10 @@ class PostController extends Controller
         return redirect('/');
     }
 
-    public function scrape(){
+    public function info(){
 
-        list($title, $info) = $this->run_scrape();
         $posts = Post::withCount('likes')->withCount('comments')->where('caution', 1)->orderBy('id', 'desc')->get();
-        return view('info', ['title' => $title, 'info' => $info, 'posts' => $posts]);
+        return view('info', ['posts' => $posts]);
     }
 
     public function change(Request $request)

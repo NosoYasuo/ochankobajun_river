@@ -11,15 +11,10 @@
           <div>{{$info}}</div>
         </div>
 
-        @auth
-        {{-- modal --}}
-        @include('post')
-        {{-- modal end--}}
-        @endif
-
     {{-- 一覧表示 --}}
     @if (count($posts) > 0)
             <!-- テーブル本体 -->
-            @include('table')
+            @include('table.table')
     @endif
+
 @endsection

@@ -1,10 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-{{-- modal --}}
-@include('post')
-{{-- modal end--}}
-
 <div class="container" style="padding: 0;">
   <div class="px-4">
     <div>こんにちは <span style="font-size: 18px;">{{Auth::user()->name}}</span> さん
@@ -17,12 +13,11 @@
     </div>
 
 
-
     <!-- テーブルヘッダ -->
     <!-- <p class="m-0 pt-4">自分の投稿一覧</p> -->
   </div>
   @if (count($posts) > 0)
-    @include('table')
+    @include('table.table')
   @else
   まだ投稿がありません
   @endif

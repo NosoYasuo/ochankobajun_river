@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +31,11 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/change', [PostController::class, 'change']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/comment', [PostController::class, 'comment']);
-    Route::get('/info', [PostController::class, 'scrape'])->middleware('checkadmin');
+    Route::get('/info', [PostController::class, 'info'])->middleware('checkadmin');
     Route::post('/like', [LikeController::class, 'like']);
     Route::post('myriver/like', [LikeController::class, 'like']);
+
+    Route::get('/adminInfo', [AdminController::class, 'index'])->middleware('checkadmin');
 
     Route::get('delete/{post}',  [PostController::class, 'destroy']); //削除機能
 

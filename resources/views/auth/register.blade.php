@@ -44,8 +44,16 @@
               <div class="col-md-6">
                 <select name="river_id" id="select3">
                   @foreach(config('river.river') as $index => $name)
-                  <option name="river_id" value="{{ $index }}">{{ $name }}</option>
-                  {{-- <option value="{{ $index }}" {{ old('river_id') === $index  ? "selected" : ""}}>{{ $name }}</option> --}}
+                  <option name="river_id" value="{{ $index }}" {{ old('river_id') === $index  ? "selected" : ""}}>{{ $name }}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              <label for="city_id" class="col-md-4 col-form-label text-md-right">{{ __('市区町村(東京都内のみ)') }}</label>
+              <div class="col-md-6">
+                <select name="city_id" id="select5">
+                  @foreach(config('city.city') as $index => $name)
+                  <option name="city_id" value="{{ $index }}" {{ old('city_id') === $index  ? "selected" : ""}}>{{ $name }}</option>
                   @endforeach
                 </select>
               </div>

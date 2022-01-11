@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'river_id',
+        'city_id',
         'admin',
         'password',
     ];
