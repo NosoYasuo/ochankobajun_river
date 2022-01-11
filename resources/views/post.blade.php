@@ -20,7 +20,16 @@
                 <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
                 @endforeach
               </select>
+
+              {{-- 行政、民間、市民で 表示を変える--}}
+              @if (Request::is('adminInfo'))
+              <input name='type' type="text" value="1" style="display: none">
+              @elseif(Request::is('private'))
+              <input name='type' type="text" value="2" style="display: none">
+              @else
+              {{-- ヒヤリハット --}}
               <input type="checkbox" value="1" name="caution">ヒヤリハット投稿
+              @endif
             </div>
             {{-- youtubeのIDを入れるinput --}}
             <input type="text" name="y_id" class="form-control" placeholder="youtube ID" value="{{old('y_id')}}">

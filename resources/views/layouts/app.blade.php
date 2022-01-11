@@ -45,12 +45,15 @@
       <div class=" container">
 
         @auth
-        <div class="d-flex">
-
           <!-- モーダルを表示させるボタン-->
           <button type="button" class="input_button m-auto border-0 rounded-pill text-secondary px-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
             投稿 <i class="fas fa-plus-circle"></i>
           </button>
+          @auth
+          {{-- modal --}}
+          @include('post')
+          {{-- modal end--}}
+          @endif
           {{-- 各川へ検索して飛べる --}}
           <form action="{{ url('change') }}" method="GET" class="form-horizontal px-2">
             <div class="d-flex">
@@ -161,6 +164,9 @@
     });
     $(document).ready(function() {
       $("#select4").select2();
+    });
+    $(document).ready(function() {
+      $("#select5").select2();
     });
   </script>
 </body>
