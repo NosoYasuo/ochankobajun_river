@@ -23,9 +23,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   {{-- fontawsome --}}
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-  <!-- Select2.css
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
-  Select2本体 -->
+  <!-- Select2本体 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
   <!-- Select2日本語化 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ja.js"></script>
@@ -45,27 +43,35 @@
       <div class=" container">
 
         @auth
-          <!-- モーダルを表示させるボタン-->
-          <button type="button" class="input_button m-auto border-0 rounded-pill text-secondary px-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            投稿 <i class="fas fa-plus-circle"></i>
-          </button>
+            <!-- モーダルを表示させるボタン-->
+            <button type="button" class="input_button m-auto border-0 rounded-pill text-secondary px-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              @if (Request::is('adminInfo'))
+              行政からの投稿 <i class="fas fa-plus-circle"></i>
+              @else
+              投稿 <i class="fas fa-plus-circle"></i>
+              @endif
+            </button>
+
           @auth
           {{-- modal --}}
           @include('post')
           {{-- modal end--}}
           @endif
           {{-- 各川へ検索して飛べる --}}
-          <form action="{{ url('change') }}" method="GET" class="form-horizontal px-2">
-            <div class="d-flex">
+          @if (Request::is('adminInfo'))
+          @else
+            <form action="{{ url('change') }}" method="GET" class="form-horizontal px-2">
+              <div class="d-flex">
 
-              <select class=" river_id" name="river_id" id="select4" style="min-width: 150px">
-                @foreach(config('river.river') as $index => $name)
-                <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
-                @endforeach
-              </select>
-              <button id=submit type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
-            </div>
-          </form>
+                <select class=" river_id" name="river_id" id="select4" style="min-width: 150px">
+                  @foreach(config('river.river') as $index => $name)
+                  <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
+                  @endforeach
+                </select>
+                <button id=submit type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
+              </div>
+            </form>
+          @endif
         </div>
         @endif
 
@@ -168,6 +174,17 @@
     $(document).ready(function() {
       $("#select5").select2();
     });
+
+    // tab操作のためのJS
+    $(function() {
+      let tabs = $(".tab"); // tabのクラスを全て取得し、変数tabsに配列で定義
+      $(".tab").on("click", function() { // tabをクリックしたらイベント発火
+        $(".active").removeClass("active"); // activeクラスを消す
+        $(this).addClass("active"); // クリックした箇所にactiveクラスを追加
+        const index = tabs.index(this); // クリックした箇所がタブの何番目か判定し、定数indexとして定義
+        $(".content").removeClass("show").eq(index).addClass("show"); // showクラスを消して、contentクラスのindex番目にshowクラスを追加
+      })
+    })
   </script>
 </body>
 

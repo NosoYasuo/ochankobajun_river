@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('content')
-        <!-- バリデーションエラーの表示に使用-->
-        @include('common.errors')
-        <!-- バリデーションエラーの表示に使用-->
+<!-- バリデーションエラーの表示に使用-->
+@include('common.errors')
+<!-- バリデーションエラーの表示に使用-->
 
+{{-- スクレイピング結果表示 --}}
+<div class="m-auto d-flex" style="padding-bottom: 18px;">
+<div>水位周知河川<div>{{$suii}}</div></div>
+<div>洪水予報<div>{{$kouzui}}</div></div>
 
-        {{-- スクレイピング結果表示 --}}
-        <div class="w-50 m-auto" style="padding-bottom: 18px;">
-          <div>{{$title}}</div>
-          <div>{{$info}}</div>
-        </div>
+</div>
 
     {{-- 一覧表示 --}}
     @if (count($posts) > 0)

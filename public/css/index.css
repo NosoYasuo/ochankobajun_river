@@ -2,6 +2,37 @@
     color: pink;
 }
 
-/* .select2-container .select2-container--default .select2-container--open{
-  display: block;
-} */
+/* tab操作のためのstyle */
+.tab-area {
+  display: flex;
+  justify-content: space-around;
+  background-color: #222e3e;
+  cursor: pointer;
+}
+.tab {
+width: 34%;
+height: 30px;
+line-height: 30px;
+text-align: center;
+color: white;
+border-right: 1px solid #50637b;
+border-left: 1px solid #222e3e;
+}
+.admintab {
+  width: 50%;
+}
+.tab.active {
+background-color: #81d8d0;
+color: white;
+border: none;
+}
+.content-area {
+  text-align: center;
+}
+
+.content {
+    display: none;
+}
+.content.show {
+    display: block;
+}

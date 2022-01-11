@@ -23,16 +23,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $city_id = Auth::user()->city_id;
+        $city = Auth::user()->city_id;
         $posts = collect();
-        foreach (config("city.river.".$city_id) as $river) {
+        foreach (config("city.river.".$city) as $river) {
         $post = Post::withCount('likes')->withCount('comments')->where('caution', 1)->where('river_id',$river)->orderBy('id', 'desc')->get();
         $posts = $posts->merge($post);
         }
 
-        $city = Auth::user()->city_id;
-
-        return view('adminInfo',['city' => $city, 'posts' => $posts]);
+        $admins = Post::withCount('likes')->withCount('comments')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        return view('adminInfo',['city' => $city, 'posts' =>$posts, 'admins' => $admins]);
     }
 
     /**

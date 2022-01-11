@@ -16,34 +16,36 @@ use Encore\Admin\Grid\Filter\Where;
 class PostController extends Controller
 {
     public function run_scrape(){
-        $url = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
 
-        try {
-            $crawler = Goutte::request('GET', $url);
-        } catch (Exception $ex) {
-            error_log(__METHOD__ . ' Exception was encountered: ' . get_class($ex) . ' ' . $ex->getMessage());
-        }
+        function get_info($url){
+            try {
+                $crawler = Goutte::request('GET', $url);
+            } catch (Exception $ex) {
+                error_log(__METHOD__ . ' Exception was encountered: ' . get_class($ex) . ' ' . $ex->getMessage());
+            }
 
-        if (count($crawler->filter('td.bColorThinBlue'))) {
-            $title =  $crawler->filter('td.bColorThinBlue')->text();
-        } else {
-            $title = "水位周知河川";
+            if (count($crawler->filter('td.widthWarningInfo'))) {
+                $kouzui =  $crawler->filter('td.widthWarningInfo')->last()->text();
+                return $kouzui;
+            } else {
+                $kouzui = "情報を取得できませんでした";
+                return $kouzui;
+            }
         }
+        $suii = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_suiishuchi.html";
+        $suii = get_info($suii);
+        $kouzui = "https://www.kasen-suibo.metro.tokyo.lg.jp/im/tsim0101g_kozui.html";
+        $kouzui = get_info($kouzui);
 
-        if (count($crawler->filter('td.widthWarningInfo'))) {
-            $info =  $crawler->filter('td.widthWarningInfo')->last()->text();
-        } else {
-            $info = "取得できませんでした";
-        }
-        return [$title, $info];
+        return [$suii, $kouzui];
     }
 
     public function index()
     {
-        list($title, $info) = $this->run_scrape();
+        list($suii, $kouzui) = $this->run_scrape();
 
         $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->orderBy('id', 'desc')->take(10)->get();
-        return view('index', ['posts' => $posts, 'title' => $title, 'info' => $info]);
+        return view('index', ['posts' => $posts, 'suii' => $suii, 'kouzui' => $kouzui]);
     }
 
     /**
@@ -185,12 +187,6 @@ class PostController extends Controller
         $comments->post_id = $request->post_id;
         $comments->save();
         return redirect('/');
-    }
-
-    public function info(){
-
-        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 1)->orderBy('id', 'desc')->get();
-        return view('info', ['posts' => $posts]);
     }
 
     public function change(Request $request)
