@@ -45,26 +45,28 @@
       <div class=" container">
 
         @auth
-        <!-- モーダルを表示させるボタン-->
-        <button type="button" class="input_button w-75 m-auto py-1 border-0 rounded-pill text-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          現在の川の様子をシェアしよう
-        </button>
+          <!-- モーダルを表示させるボタン-->
+          <button type="button" class="input_button m-auto border-0 rounded-pill text-secondary px-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            投稿 <i class="fas fa-plus-circle"></i>
+          </button>
+          @auth
+          {{-- modal --}}
+          @include('post')
+          {{-- modal end--}}
+          @endif
+          {{-- 各川へ検索して飛べる --}}
+          <form action="{{ url('change') }}" method="GET" class="form-horizontal px-2">
+            <div class="d-flex">
 
-        @auth
-        {{-- modal --}}
-        @include('post')
-        {{-- modal end--}}
-        @endif
-
-        {{-- 各川へ検索して飛べる --}}
-        <form  action="{{ url('change') }}" method="GET" class="form-horizontal px-4">
-          <select class="river_id" name="river_id" id="select4" style="min-width: 300px">
-            @foreach(config('river.river') as $index => $name)
-            <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
-            @endforeach
-          </select>
-          <button id=submit type="submit" class="input-group-text"><i class="fas fa-angle-double-up"></i></button>
-        </form>
+              <select class=" river_id" name="river_id" id="select4" style="min-width: 150px">
+                @foreach(config('river.river') as $index => $name)
+                <option value="{{ $index }}" {{ $index === Auth::user()->river_id ? "selected" : ""}}>{{ $name }}</option>
+                @endforeach
+              </select>
+              <button id=submit type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
+            </div>
+          </form>
+        </div>
         @endif
 
         {{-- ハンバーガーメニュー --}}
