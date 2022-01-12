@@ -5,16 +5,16 @@
 <!-- バリデーションエラーの表示に使用-->
 
 {{-- スクレイピング結果表示 --}}
-<div class="m-auto d-flex" style="padding-bottom: 18px;">
-<div>水位周知河川<div>{{$suii}}</div></div>
-<div>洪水予報<div>{{$kouzui}}</div></div>
+<div class="d-flex justify-content-around" style="padding-bottom: 18px;">
+  <div>洪水予報<br /><small>{{$kouzui}}</small></div>
+  <div>水位周知河川<br /><small>{{$suii}}</small></div>
 
 </div>
 
-    {{-- 一覧表示 --}}
-    @if (count($posts) > 0)
-            <!-- テーブル本体 -->
-            @include('table.table')
-    @endif
+{{-- 一覧表示 --}}
+@if (count($posts) > 0)
+<!-- テーブル本体 -->
+@include('table.table')
+@endif
 
 @endsection
