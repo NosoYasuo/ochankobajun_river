@@ -5,13 +5,15 @@
       <!-- <tr style=" display:flex; flex-direction: column;"> -->
       <!-- タイトル -->
       <td class="table-text mt-1 h4 m-0 p-0 px-2 mt-4" style="color: #48908A;">
-        <div class="title">{{ $post->title}}</div>
-        {{-- 削除ボタン --}}
-        @if(Request::is('mypage'))
-          <form  action="{{ url('delete/'.$post->id) }}" method="GET" class="form-horizontal px-4">
+        <div class="d-flex">
+          <div class="title">{{ $post->title}}</div>
+          {{-- 削除ボタン --}}
+          @if(Request::is('mypage'))
+          <form action="{{ url('delete/'.$post->id) }}" method="GET" class="form-horizontal px-4">
             {{ csrf_field() }}
             <button type="submit">削除</button>
           </form>
+        </div>
         @endif
       </td>
       <td class="table-text d-flex justify-content-between m-0 p-0 px-2 pt-1">
@@ -93,28 +95,24 @@
       </td>
     </tr>
     @if(Request::is('myriver/*'))
-      @if (count ($privates) < 3)
-        @if (count ($privates)==1)
-            @include('youtube')
-        @else
-            @if ($loop->iteration == 2)
-              @include('youtube')
-            @endif
-        @endif
-      @else
-        @if($loop->iteration === 3)
-              @include('youtube')
-        @endif
+    @if (count ($privates) < 3) @if (count ($privates)==1) @include('youtube') @else @if ($loop->iteration == 2)
+      @include('youtube')
       @endif
-    @endif
-    @endforeach
+      @endif
+      @else
+      @if($loop->iteration === 3)
+      @include('youtube')
+      @endif
+      @endif
+      @endif
+      @endforeach
   </tbody>
 </table>
 <script>
   let privates = @json($privates);
   let privateId = privates.map(private => private.id)
   privateId.forEach((id) => {
-    document.getElementById("p"+id).addEventListener('click', () => {
+    document.getElementById("p" + id).addEventListener('click', () => {
       //style="display: none"
       document.getElementById("p_commentArea" + id).style.display = 'block';
       document.getElementById("p_commentForm" + id).style.display = 'block';
