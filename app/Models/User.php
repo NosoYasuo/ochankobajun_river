@@ -49,4 +49,12 @@ class User extends Authenticatable
     {
         return config('river.river')[$this->river_id];
     }
+
+    public function getCityNameAttribute()
+    {
+        if($this->city_id ==0 ){
+        return "登録されていません";
+        }
+        return config('city.city')[$this->city_id];
+    }
 }
