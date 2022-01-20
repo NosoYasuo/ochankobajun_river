@@ -10,7 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -52,8 +54,8 @@ class User extends Authenticatable
 
     public function getCityNameAttribute()
     {
-        if($this->city_id ==0 ){
-        return "登録されていません";
+        if ($this->city_id == 0) {
+            return "登録されていません";
         }
         return config('city.city')[$this->city_id];
     }

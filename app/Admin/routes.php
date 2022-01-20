@@ -16,5 +16,4 @@ Route::group([
     $router->resource('manager/users', UserController::class);
     $router->resource('manager/posts', PostController::class);
     $router->resource('manager/posts', PostController::class);
-
 });

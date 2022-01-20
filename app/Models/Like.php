@@ -10,12 +10,14 @@ class Like extends Model
     use HasFactory;
 
     public function user()
-    {   //usersテーブルとのリレーションを定義するuserメソッド
+    {
+   //usersテーブルとのリレーションを定義するuserメソッド
         return $this->belongsTo(User::class);
     }
 
     public function post()
-    {   //boxテーブルとのリレーションを定義するboxメソッド
+    {
+   //boxテーブルとのリレーションを定義するboxメソッド
         return $this->belongsTo(Post::class);
     }
 }

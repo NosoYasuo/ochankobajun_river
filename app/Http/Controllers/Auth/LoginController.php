@@ -19,7 +19,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
 
     /**
@@ -42,6 +41,6 @@ class LoginController extends Controller
 
     public function redirectPath()
     {
-        return 'myriver/'.Auth::user()->river_id;
+        return 'myriver/' . Auth::user()->river_id;
     }
 }

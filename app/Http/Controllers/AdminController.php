@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CautionMail;
 use Encore\Admin\Grid\Filter\Where;
 
+
 class AdminController extends Controller
 {
     /**
@@ -25,13 +26,13 @@ class AdminController extends Controller
     {
         $city = Auth::user()->city_id;
         $posts = collect();
-        foreach (config("city.river.".$city) as $river) {
-        $post = Post::withCount('likes')->withCount('comments')->where('caution', 1)->where('river_id',$river)->orderBy('id', 'desc')->get();
-        $posts = $posts->merge($post);
+        foreach (config("city.river." . $city) as $river) {
+            $post = Post::withCount('likes')->withCount('comments')->where('caution', 1)->where('river_id', $river)->orderBy('id', 'desc')->get();
+            $posts = $posts->merge($post);
         }
 
         $admins = Post::withCount('likes')->withCount('comments')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
-        return view('adminInfo',['city' => $city, 'posts' =>$posts, 'admins' => $admins]);
+        return view('adminInfo', ['city' => $city, 'posts' => $posts, 'admins' => $admins]);
     }
 
     /**

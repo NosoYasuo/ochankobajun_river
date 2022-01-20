@@ -15,9 +15,11 @@ use Encore\Admin\Grid\Filter\Where;
 
 class PostController extends Controller
 {
-    public function run_scrape(){
+    public function run_scrape()
+    {
 
-        function get_info($url){
+        function get_info($url)
+        {
             try {
                 $crawler = Goutte::request('GET', $url);
             } catch (Exception $ex) {
@@ -44,7 +46,7 @@ class PostController extends Controller
     {
         list($suii, $kouzui) = $this->run_scrape();
 
-        $posts = Post::withCount('likes')->withCount('comments')->where('caution', 0)->orderBy('id', 'desc')->take(10)->get();
+        $posts = Post::withCount('likes', 'comments')->where('caution', 0)->orderBy('id', 'desc')->take(10)->get();
         return view('index', ['posts' => $posts, 'suii' => $suii, 'kouzui' => $kouzui]);
     }
 
@@ -64,11 +66,11 @@ class PostController extends Controller
             ]);
 
         //バリデーション:エラー
-            if ($validator->fails()) {
-                return redirect('/')
-                    ->withInput()
-                    ->withErrors($validator);
-            }
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withInput()
+                ->withErrors($validator);
+        }
 
         //画像の扱いに関して
         if ($file = $request->file_name) {
@@ -85,17 +87,17 @@ class PostController extends Controller
             $file_ext = 2;
         } elseif ($request->y_id) {
             $file_ext = 3;
-        }else {
+        } else {
             $file_ext = "";
         }
 
-        if(!$request->caution){
-            $request->caution=0;
+        if (!$request->caution) {
+            $request->caution = 0;
         }
 
 
         $user = Auth::user();
-        $posts = new Post;
+        $posts = new Post();
         $posts->title = $request->title;
         $posts->message = $request->message;
         $posts->file_name = $fileName;
@@ -114,7 +116,7 @@ class PostController extends Controller
         $posts->save();
 
         if ($request->caution == 1) {
-            foreach (config("river.city.".$request->river_id) as $data) {
+            foreach (config("river.city." . $request->river_id) as $data) {
                 $users = User::where([['city_id', '=', $data],['admin', '=', 1]])->get();
                 foreach ($users as $user) {
                     Mail::to($user->email)->send(new CautionMail($posts));
@@ -152,16 +154,16 @@ class PostController extends Controller
     //myriverへ移動
     public function myRiver($river_id)
     {
-        $posts = Post::withCount('likes')->withCount('comments')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
-        $admins = Post::withCount('likes')->withCount('comments')->where('type', 1)->where('river_id', $river_id)->orderBy('id', 'desc')->orderBy('id', 'desc')->get();
-        $privates = Post::withCount('likes')->withCount('comments')->where('type', 2)->where('river_id', $river_id)->orderBy('id', 'desc')->orderBy('id', 'desc')->get();
+        $posts = Post::withCount('likes', 'comments')->where('river_id', $river_id)->orderBy('id', 'desc')->get();
+        $admins = Post::withCount('likes', 'comments')->where('type', 1)->where('river_id', $river_id)->orderBy('id', 'desc')->get();
+        $privates = Post::withCount('likes', 'comments')->where('type', 2)->where('river_id', $river_id)->orderBy('id', 'desc')->get();
         return view('myriver', ['posts' => $posts,'admins' => $admins, 'privates' => $privates, 'river_id' => $river_id]);
     }
 
     //mypageへ移動
     public function myPage()
     {
-        $posts = Post::withCount('likes')->withCount('comments')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        $posts = Post::withCount('likes', 'comments')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return view('mypage', ['posts' => $posts]);
     }
 
@@ -180,7 +182,7 @@ class PostController extends Controller
                 ->withErrors($validator);
         }
         $user = Auth::user();
-        $comments = new Comment;
+        $comments = new Comment();
         $comments->comment = $request->comment;
         $comments->user_id = $user->id;
         $comments->user_name = $user->name;
@@ -191,7 +193,6 @@ class PostController extends Controller
 
     public function change(Request $request)
     {
-        return redirect('/myriver/'.$request->river_id);
+        return redirect('/myriver/' . $request->river_id);
     }
-
 }
